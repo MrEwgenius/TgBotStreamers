@@ -10,9 +10,9 @@ const InputGroup = ({ name, formData, handleChange, errors, label }) => {
       <input
         type={name === "streamerLink" ? "url" : "number"}
         id={name}
-        inputMode="decimal"
+        inputMode={name === "streamerLink" ? "none" : "decimal"}
         name={name}
-        pattern={name === "streamerLink" ? "" : "\\d*"}
+        pattern={name === "streamerLink" && "\\d*"}
         value={formData[name]}
         onChange={handleChange}
         className={`${styles.input} `}
