@@ -18,7 +18,8 @@ body {
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: var(--foreground);
+  background: url("../../public/hero-bg.jpg");
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -35,8 +36,4 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
+
