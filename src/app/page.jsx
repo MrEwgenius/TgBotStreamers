@@ -2,6 +2,9 @@
 import { useState } from "react";
 import styles from "./page.module.scss";
 import InputGroup from "@/components/InputGroup/InputGroup";
+import GeoSelect from "@/components/Select/GeoSelect";
+import { fieldsConfig } from "@/config/fieldsConfig";
+import { geoOptions } from "@/config/geoOptions";
 
 export default function Home() {
   const [errors, setErrors] = useState({});
@@ -15,12 +18,21 @@ export default function Home() {
     geoBet: "",
     performerPrice: "",
     clientPrice: "",
+    geo: null,
   });
+
+  const handleGeoChange = (selectedOption) => {
+    setFormData((prev) => ({ ...prev, geo: selectedOption }));
+    setErrors((prev) => ({
+      ...prev,
+      geo: selectedOption ? null : "Выберите ГЕО",
+    }));
+  };
 
   const validateFields = () => {
     const newErrors = {};
     Object.keys(formData).forEach((key) => {
-      if (!formData[key].trim()) {
+      if (!formData[key]) {
         newErrors[key] = "Поле обязательно для заполнения";
       } else if (key === "streamerLink" && !isValidURL(formData[key])) {
         newErrors[key] = "Введите корректную ссылку на стримера";
@@ -62,6 +74,10 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.geo) {
+      setErrors((prev) => ({ ...prev, geo: "Выберите ГЕО" }));
+      return;
+    }
     if (!validateFields()) {
       console.log("Валидация не пройдена");
       return;
@@ -79,6 +95,7 @@ export default function Home() {
       geoBet: "",
       performerPrice: "",
       clientPrice: "",
+      geo: null,
     });
   };
 
@@ -86,17 +103,15 @@ export default function Home() {
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit}>
         <h2 className={styles.title}>Введите данные</h2>
-        {[
-          { name: "streamerLink", label: "Ссылка на стримера" },
-          { name: "broadcasts", label: "Количество трансляций" },
-          { name: "ftdCount", label: "Количество FTD" },
-          { name: "ftdSum", label: "Сумма FTD" },
-          { name: "depositsCount", label: "Количество депозитов" },
-          { name: "depositsSum", label: "Сумма депозитов" },
-          { name: "geoBet", label: "Ставка игрока на ГЕО" },
-          { name: "performerPrice", label: "Цена исполнителя за интеграцию" },
-          { name: "clientPrice", label: "Цена заказчика за интеграцию" },
-        ].map((field) => (
+        <GeoSelect
+          key={formData.geo}
+          label="Выберите ГЕО"
+          options={geoOptions}
+          value={formData.geo}
+          onChange={handleGeoChange}
+          error={errors.geo}
+        />
+        {fieldsConfig.map((field) => (
           <InputGroup
             key={field.name}
             name={field.name}
@@ -104,9 +119,10 @@ export default function Home() {
             handleChange={handleChange}
             errors={errors}
             label={field.label}
+            hint={field.hint}
           />
         ))}
-       
+
         <button type="submit" className={styles.button}>
           Отправить
         </button>

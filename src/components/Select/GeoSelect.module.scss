@@ -1,0 +1,45 @@
+.geoSelect {
+    position: relative;
+  margin-top: 15px;
+
+  .label {
+    font-size: 0.8rem;
+    color: #fff;
+    display: block;
+  }
+
+  .error {
+    border-color: red;
+  }
+
+  .errorText {
+    font-size: 12px;
+    color: red;
+  }
+}
+.hintIcon {
+  position: absolute;
+  top: 60%;
+  right: -5px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #fff;
+
+  &:hover {
+    color: #bb3838;
+  }
+}
+
+.hint {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 12px;
+  padding: 8px;
+  border-radius: 4px;
+  width: 200px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
