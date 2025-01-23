@@ -27,7 +27,7 @@ const GeoSelect = ({ value, options, onChange, label, error }) => {
       <span className={styles.hintIcon} onClick={toggleHint}>
         <QuestionSVG color={showHint ? "red" : "#949494"} />
       </span>
-      {showHint && <div className={styles.hint}>{"Выберите Гео"}</div>}
+      {showHint && <div className={styles.hint}>{"Укажите страну или регион, на который будет ориентирована рекламная кампания. GEO (географический таргетинг) позволяет определить, где находится аудитория стримера."}</div>}
       {error && <span className={styles.errorText}>{error}</span>}
     </div>
   );
