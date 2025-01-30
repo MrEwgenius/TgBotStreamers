@@ -162,15 +162,15 @@ export default function Home() {
         </button>
       </form>
       {/* Итоги расчётов */}
-      {!results && (
+      {results && (
         <div className={styles.results}>
           <h2>Итоги расчётов</h2>
-          <p>Средняя сумма чека одного FTD: </p>
-          <p>Цена 1 игрока: </p>
+          <p>Средняя сумма чека одного FTD: {results.avgFtdAmount}</p>
+          <p>Цена 1 игрока: {results.pricePerPlayer}</p>
           <p>
-            Цена исполнителя по нашим расчетам: 
+            Цена исполнителя по нашим расчетам: {results.finalStreamerPrice}
           </p>
-          <p>Цена заказчика по нашим расчетам: </p>
+          <p>Цена заказчика по нашим расчетам: {results.finalClientPrice}</p>
         </div>
       )}
       {/* <PayButton /> */}
