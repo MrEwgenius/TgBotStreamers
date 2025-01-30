@@ -23,6 +23,7 @@ export default function Home() {
   });
 
   const [results, setResults] = useState(null); 
+  const [streamerLink, setStreamerLink] = useState(''); 
 
   const handleGeoChange = (selectedOption) => {
     setFormData((prev) => ({ ...prev, geo: selectedOption }));
@@ -114,6 +115,7 @@ export default function Home() {
 
       const result = await response.json();
       setResults(result);
+      setStreamerLink(formData.streamerLink);
       // console.log("Ответ от сервера:", result);
 
       setFormData({
@@ -165,6 +167,7 @@ export default function Home() {
       {results && (
         <div className={styles.results}>
           <h2>Итоги расчётов</h2>
+          <p> Стример: {streamerLink}</p>
           <p>Средняя сумма чека одного FTD: {results.avgFtdAmount}</p>
           <p>Цена 1 игрока: {results.pricePerPlayer}</p>
           <p>
