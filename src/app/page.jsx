@@ -5,21 +5,24 @@ import InputGroup from "@/components/InputGroup/InputGroup";
 import GeoSelect from "@/components/Select/GeoSelect";
 import { fieldsConfig } from "@/config/fieldsConfig";
 import { geoOptions } from "@/config/geoOptions";
+import PayButton from "@/components/PayButton/PayButton";
 
 export default function Home() {
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     streamerLink: "",
-    broadcasts: "",
-    ftdCount: "",
-    ftdSum: "",
-    depositsCount: "",
-    depositsSum: "",
-    geoBet: "",
-    performerPrice: "",
-    clientPrice: "",
+    broadcasts: '',
+    ftdCount: '',
+    ftdSum: '',
+    depositsCount: '',
+    depositsSum: '',
+    geoBet: '',
+    performancePrice: '',
+    agentCommission: '',
     geo: null,
   });
+
+  const [results, setResults] = useState(null); 
 
   const handleGeoChange = (selectedOption) => {
     setFormData((prev) => ({ ...prev, geo: selectedOption }));
@@ -74,29 +77,60 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.geo) {
-      setErrors((prev) => ({ ...prev, geo: "Выберите ГЕО" }));
-      return;
-    }
-    if (!validateFields()) {
-      console.log("Валидация не пройдена");
-      return;
-    }
+    try {
+      if (!formData.geo) {
+        setErrors((prev) => ({ ...prev, geo: "Выберите ГЕО" }));
+        return;
+      }
+      if (!validateFields()) {
+        console.log("Валидация не пройдена");
+        return;
+      }
 
-    console.log("Отправка данных:", formData);
+      const transformedData = {
+        ...formData,
+        broadcasts: parseInt(formData.broadcasts),
+        ftdCount: parseInt(formData.ftdCount),
+        ftdSum: parseFloat(formData.ftdSum),
+        depositsCount: parseInt(formData.depositsCount),
+        depositsSum: parseFloat(formData.depositsSum),
+        geoBet: parseInt(formData.geoBet),
+        performancePrice: parseFloat(formData.performancePrice),
+        agentCommission: parseInt(formData.agentCommission),
+      };
 
-    setFormData({
-      streamerLink: "",
-      broadcasts: "",
-      ftdCount: "",
-      ftdSum: "",
-      depositsCount: "",
-      depositsSum: "",
-      geoBet: "",
-      performerPrice: "",
-      clientPrice: "",
-      geo: null,
-    });
+      console.log("Отправка данных:", transformedData);
+      const response = await fetch("https://holstenmain.com/api/calculate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(transformedData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      setResults(result);
+      // console.log("Ответ от сервера:", result);
+
+      setFormData({
+        streamerLink: "",
+        broadcasts: '',
+        ftdCount: '',
+        ftdSum: '',
+        depositsCount: '',
+        depositsSum: '',
+        geoBet: '',
+        performancePrice: '',
+        agentCommission: '',
+        geo: null,
+      });
+    } catch (error) {
+      console.error("Ошибка при отправке:", error);
+    }
   };
 
   return (
@@ -127,6 +161,19 @@ export default function Home() {
           Отправить
         </button>
       </form>
+      {/* Итоги расчётов */}
+      {results && (
+        <div className={styles.results}>
+          <h2>Итоги расчётов</h2>
+          <p>Средняя сумма чека одного FTD: {results.avgFtdAmount}</p>
+          <p>Цена 1 игрока: {results.pricePerPlayer}</p>
+          <p>
+            Цена исполнителя по нашим расчетам: {results.finalStreamerPrice}
+          </p>
+          <p>Цена заказчика по нашим расчетам: {results.finalClientPrice}</p>
+        </div>
+      )}
+      {/* <PayButton /> */}
     </div>
   );
 }
