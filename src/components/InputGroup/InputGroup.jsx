@@ -2,10 +2,20 @@ import React, { useState } from "react";
 import styles from "./InputGroup.module.scss";
 import QuestionSVG from "../../../public/Question";
 
-const InputGroup = ({ name, formData, handleChange, errors, label, hint }) => {
-  const [showHint, setShowHint] = useState(false);
-
-  const toggleHint = () => setShowHint((prev) => !prev);
+const InputGroup = ({
+  name,
+  formData,
+  handleChange,
+  errors,
+  label,
+  hint,
+  setActiveHint,
+  activeHint,
+}) => {
+  const toggleHint = () => {
+    setActiveHint((prev) => (prev === name ? null : name)); // Открываем текущее поле или закрываем, если оно уже открыто
+  };
+  const isHintVisible = activeHint === name; // Проверяем, должно ли быть подсказка видимой
 
   return (
     <div
@@ -33,12 +43,15 @@ const InputGroup = ({ name, formData, handleChange, errors, label, hint }) => {
 
       {/* Вопросительный знак */}
       <span className={styles.hintIcon} onClick={toggleHint}>
-        <QuestionSVG color={showHint ? 'red' : '#949494'} />
-        
+        <QuestionSVG color={isHintVisible ? "red" : "#949494"} />
       </span>
 
       {/* Подсказка */}
-      {showHint && <div className={styles.hint}>{hint}</div>}
+      {isHintVisible && (
+        <div className={styles.hint} dangerouslySetInnerHTML={{ __html: hint }}>
+          
+        </div>
+      )}
     </div>
   );
 };

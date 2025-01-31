@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.scss";
 import InputGroup from "@/components/InputGroup/InputGroup";
 import GeoSelect from "@/components/Select/GeoSelect";
@@ -11,19 +11,35 @@ export default function Home() {
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     streamerLink: "",
-    broadcasts: '',
-    ftdCount: '',
-    ftdSum: '',
-    depositsCount: '',
-    depositsSum: '',
-    geoBet: '',
-    performancePrice: '',
-    agentCommission: '',
+    broadcasts: "",
+    ftdCount: "",
+    ftdSum: "",
+    depositsCount: "",
+    depositsSum: "",
+    geoBet: "",
+    performancePrice: "",
+    agentCommission: "",
     geo: null,
   });
 
-  const [results, setResults] = useState(null); 
-  const [streamerLink, setStreamerLink] = useState(''); 
+  const [results, setResults] = useState(null);
+  const [streamerLink, setStreamerLink] = useState("");
+  const [activeHint, setActiveHint] = useState(null);
+  const formRef = useRef(null);
+
+  // Закрытие подсказки при клике вне формы или другого поля
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (formRef.current && !formRef.current.contains(event.target)) {
+        setActiveHint(null); // Сбрасываем активную подсказку
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleGeoChange = (selectedOption) => {
     setFormData((prev) => ({ ...prev, geo: selectedOption }));
@@ -31,6 +47,7 @@ export default function Home() {
       ...prev,
       geo: selectedOption ? null : "Выберите ГЕО",
     }));
+    setActiveHint(null);
   };
 
   const validateFields = () => {
@@ -120,14 +137,14 @@ export default function Home() {
 
       setFormData({
         streamerLink: "",
-        broadcasts: '',
-        ftdCount: '',
-        ftdSum: '',
-        depositsCount: '',
-        depositsSum: '',
-        geoBet: '',
-        performancePrice: '',
-        agentCommission: '',
+        broadcasts: "",
+        ftdCount: "",
+        ftdSum: "",
+        depositsCount: "",
+        depositsSum: "",
+        geoBet: "",
+        performancePrice: "",
+        agentCommission: "",
         geo: null,
       });
     } catch (error) {
@@ -146,6 +163,8 @@ export default function Home() {
           value={formData.geo}
           onChange={handleGeoChange}
           error={errors.geo}
+          activeHint={activeHint}
+          setActiveHint={setActiveHint}
         />
         {fieldsConfig.map((field) => (
           <InputGroup
@@ -156,6 +175,8 @@ export default function Home() {
             errors={errors}
             label={field.label}
             hint={field.hint}
+            activeHint={activeHint}
+            setActiveHint={setActiveHint}
           />
         ))}
 
@@ -167,13 +188,18 @@ export default function Home() {
       {results && (
         <div className={styles.results}>
           <h2>Итоги расчётов</h2>
-          <p> Стример: {streamerLink}</p>
-          <p>Средняя сумма чека одного FTD: {results.avgFtdAmount}</p>
-          <p>Цена 1 игрока: {results.pricePerPlayer}</p>
+          <p> <span>Стример:</span> {streamerLink}</p>
+          <p><span>Цена заказчика:</span> {results.clientPrice}</p>
+          <p><span>Средняя сумма чека одного FTD:</span> {results.avgFtdAmount}</p>
+          <p><span>Цена 1 игрока:</span> {results.pricePerPlayer}</p>
+          <p><span>Отличие цены:</span> {results.priceDifference} %</p>
           <p>
-            Цена исполнителя по нашим расчетам: {results.finalStreamerPrice}
+            <span>Предлагаемое уменьшение цены стримера:</span> {results.proposedDiscount} %
           </p>
-          <p>Цена заказчика по нашим расчетам: {results.finalClientPrice}</p>
+          <p><span>Цена заказчика по нашим расчетам:</span> {results.finalClientPrice}</p>
+          <p>
+            <span>Цена исполнителя по нашим расчетам:</span> {results.finalStreamerPrice}
+          </p>
         </div>
       )}
       {/* <PayButton /> */}
