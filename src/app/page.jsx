@@ -188,17 +188,33 @@ export default function Home() {
       {results && (
         <div className={styles.results}>
           <h2>Итоги расчётов</h2>
-          <p> <span>Стример:</span> {streamerLink}</p>
-          <p><span>Цена заказчика:</span> {results.clientPrice}</p>
-          <p><span>Средняя сумма чека одного FTD:</span> {results.avgFtdAmount}</p>
-          <p><span>Цена 1 игрока:</span> {results.pricePerPlayer}</p>
-          <p><span>Отличие цены:</span> {results.priceDifference} %</p>
           <p>
-            <span>Предлагаемое уменьшение цены стримера:</span> {results.proposedDiscount} %
+           
+            <span>Стример:</span> {streamerLink}
           </p>
-          <p><span>Цена заказчика по нашим расчетам:</span> {results.finalClientPrice}</p>
           <p>
-            <span>Цена исполнителя по нашим расчетам:</span> {results.finalStreamerPrice}
+            <span>Цена заказчика:</span> {results.clientPrice}
+          </p>
+          <p>
+            <span>Средняя сумма чека одного FTD:</span> {results.avgFtdAmount}
+          </p>
+          <p>
+            <span>Цена 1 игрока:</span> {results.pricePerPlayer}
+          </p>
+          <p>
+            <span>Отличие цены:</span> {results.priceDifference} %
+          </p>
+          <p>
+            <span>Предлагаемое уменьшение цены стримера:</span>{" "}
+            {results.proposedDiscount} %
+          </p>
+          <p>
+            <span>Цена заказчика по нашим расчетам:</span>{" "}
+            {results.finalClientPrice}
+          </p>
+          <p>
+            <span>Цена исполнителя по нашим расчетам:</span>{" "}
+            {results.finalStreamerPrice}
           </p>
         </div>
       )}
