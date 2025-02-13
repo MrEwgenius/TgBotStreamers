@@ -26,6 +26,7 @@ export default function Home() {
   const [streamerLink, setStreamerLink] = useState("");
   const [activeHint, setActiveHint] = useState(null);
   const formRef = useRef(null);
+  const resultsRef = useRef(null);
 
   // Закрытие подсказки при клике вне формы или другого поля
   useEffect(() => {
@@ -117,7 +118,7 @@ export default function Home() {
         agentCommission: parseInt(formData.agentCommission),
       };
 
-      console.log("Отправка данных:", transformedData);
+      // console.log("Отправка данных:", transformedData);
       const response = await fetch("https://holstenmain.com/api/calculate", {
         method: "POST",
         headers: {
@@ -151,7 +152,12 @@ export default function Home() {
       console.error("Ошибка при отправке:", error);
     }
   };
-
+  // Скролл вниз при появлении результатов
+  useEffect(() => {
+    if (results && resultsRef.current) {
+      resultsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [results]);
   return (
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -186,10 +192,9 @@ export default function Home() {
       </form>
       {/* Итоги расчётов */}
       {results && (
-        <div className={styles.results}>
+        <div className={styles.results} ref={resultsRef}>
           <h2>Итоги расчётов</h2>
           <p>
-           
             <span>Стример:</span> {streamerLink}
           </p>
           <p>
