@@ -44,7 +44,7 @@
     color: #ffffff;
     p {
       color: #ffffff;
-      word-break: break-all; /* Ломает длинные слова и переносит их */
+      // word-break: break-all; /* Ломает длинные слова и переносит их */
       overflow-wrap: break-word; /* Альтернативный вариант */
       white-space: normal;
       span {
