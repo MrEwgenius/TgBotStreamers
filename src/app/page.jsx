@@ -6,6 +6,7 @@ import GeoSelect from "@/components/Select/GeoSelect";
 import { fieldsConfig } from "@/config/fieldsConfig";
 import { geoOptions } from "@/config/geoOptions";
 import PayButton from "@/components/PayButton/PayButton";
+import { Popup } from "@/components/Popup/Popup";
 
 export default function Home() {
   const [errors, setErrors] = useState({});
@@ -25,6 +26,8 @@ export default function Home() {
   const [results, setResults] = useState(null);
   const [streamerLink, setStreamerLink] = useState("");
   const [activeHint, setActiveHint] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+
   const formRef = useRef(null);
   const resultsRef = useRef(null);
 
@@ -158,8 +161,18 @@ export default function Home() {
       resultsRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [results]);
+
+  // Проверка первого посещения
+  useEffect(() => {
+    const hasSeenPopup = localStorage.getItem("hasSeenPopup");
+    if (!hasSeenPopup) {
+      setShowPopup(true);
+      localStorage.setItem("hasSeenPopup", "true");
+    }
+  }, []);
   return (
     <div className={styles.container}>
+      {showPopup && <Popup onClose={() => setShowPopup(false)} />}
       <form className={styles.form} onSubmit={handleSubmit}>
         <h2 className={styles.title}>Введите данные</h2>
         <GeoSelect
