@@ -7,6 +7,7 @@ import { fieldsConfig } from "@/config/fieldsConfig";
 import { geoOptions } from "@/config/geoOptions";
 import PayButton from "@/components/PayButton/PayButton";
 import { Popup } from "@/components/Popup/Popup";
+import { BottomTabs } from "@/components/BottomTabs/BottomTabs";
 
 export default function Home() {
   const [errors, setErrors] = useState({});
@@ -170,6 +171,8 @@ export default function Home() {
       localStorage.setItem("hasSeenPopup", "true");
     }
   }, []);
+
+  const [activeTab, setActiveTab] = useState("calculator"); // По умолчанию активен калькулятор
   return (
     <div className={styles.container}>
       {showPopup && <Popup onClose={() => setShowPopup(false)} />}
@@ -237,7 +240,7 @@ export default function Home() {
           </p>
         </div>
       )}
-      {/* <PayButton /> */}
+     
     </div>
   );
 }

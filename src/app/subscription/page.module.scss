@@ -1,0 +1,76 @@
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+  color: #f1f1f1;
+  font-family: Arial, sans-serif;
+  padding-bottom: 70px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.activePlan {
+  padding: 20px;
+  border-radius: 12px;
+  background: #222;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px;
+}
+
+.noPlan {
+  font-size: 16px;
+  color: #888;
+}
+
+.plans {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.plan {
+  padding: 20px;
+  border-radius: 12px;
+  background: #252525;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.plan:hover {
+  background: #2d2d2d;
+  transform: translateY(-2px);
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4caf50;
+  margin: 5px 0;
+}
+
+.description {
+  font-size: 14px;
+  color: #bbb;
+}
+
+.selectBtn {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: #4caf50;
+  color: white;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.selectBtn:hover {
+  background: #388e3c;
+}
