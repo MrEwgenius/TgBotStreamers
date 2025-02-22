@@ -1,39 +1,59 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./page.module.scss";
 
-const plans = [
-  { id: 1, name: "Разовый расчёт", price: "50₽", description: "Один расчёт в калькуляторе." },
-  { id: 2, name: "Про", price: "300₽", description: "Безлимитные расчёты на 3 дня." },
-  { id: 3, name: "Премиум", price: "900₽", description: "Безлимитные расчёты на 30 дней." },
-];
+const SubscriptionPage = () => {
+  const [activeSubscription, setActiveSubscription]=useState  ("Базовый");
 
-const Subscription = () => {
-  const [activePlan, setActivePlan] = useState(null);
+  const subscriptionPlans = [
+    {
+      name: "Базовый",
+      price: "299 ₽/месяц",
+      features: [
+        "Доступ к основным функциям",
+        "Ограниченное количество запросов",
+      ],
+    },
+    {
+      name: "Продвинутый",
+      price: "599 ₽/месяц",
+      features: [
+        "Все функции базового плана",
+        "Неограниченное количество запросов",
+        "Приоритетная поддержка",
+      ],
+    },
+    {
+      name: "Премиум",
+      price: "999 ₽/месяц",
+      features: [
+        "Все функции продвинутого плана",
+        "Эксклюзивные функции",
+        "Персональный менеджер",
+      ],
+    },
+  ];
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>Ваш текущий тариф</h2>
-      <div className={styles.activePlan}>
-        {activePlan ? (
-          <>
-            <h3>{activePlan.name}</h3>
-            <p className={styles.price}>{activePlan.price}</p>
-            <p className={styles.description}>{activePlan.description}</p>
-          </>
-        ) : (
-          <p className={styles.noPlan}>Активного тарифа нет</p>
-        )}
-      </div>
-
-      <h2 className={styles.title}>Выберите тариф</h2>
-      <div className={styles.plans}>
-        {plans.map((plan) => (
-          <div key={plan.id} className={styles.plan} onClick={() => setActivePlan(plan)}>
-            <h3>{plan.name}</h3>
+    <div className={styles.subscriptionContainer}>
+      <h1>Подписка</h1>
+      {activeSubscription && (
+        <div className={styles.activeSubscription}>
+          <h2>Активная подписка: {activeSubscription}</h2>
+          <p>Действует до: 31 декабря 2023</p>
+        </div>
+      )}
+      <div className={styles.planContainer}>
+        {subscriptionPlans.map((plan, index) => (
+          <div key={index} className={styles.planCard}>
+            <h2>{plan.name}</h2>
             <p className={styles.price}>{plan.price}</p>
-            <p className={styles.description}>{plan.description}</p>
-            <button className={styles.selectBtn}>Выбрать</button>
+            <ul>
+              {plan.features.map((feature, idx) => (
+                <li key={idx}>{feature}</li>
+              ))}
+            </ul>
+            <button className={styles.subscribeButton}>Выбрать</button>
           </div>
         ))}
       </div>
@@ -41,4 +61,4 @@ const Subscription = () => {
   );
 };
 
-export default Subscription;
+export default SubscriptionPage;

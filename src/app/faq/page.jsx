@@ -1,61 +1,69 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./page.module.scss";
+import { ChevronDown, ChevronUp, MessageCircle } from "lucide-react";
 
-const faqData = [
-  { question: "Вопрос первый?", answer: "Че-то там отвечаем на первый вопрос" },
-  { question: "Второй вопрос?", answer: "Ответ бла бла бла" },
-  {
-    question: "Пятый вопрос?",
-    answer:
-      "Нет фанатзии, хз чё тут написать в ответ, пусть будет много текста. Якобы я тут что-то полезное рассказываю!",
-  },
-];
-
-const Faq = () => {
+const FAQPage = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
-  const toggleAccordion = (index) => {
+  const faqs = [
+    {
+      question: "Как оформить подписку?",
+      answer:
+        "Перейдите на страницу 'Подписка' и выберите подходящий вам план.",
+    },
+    {
+      question: "Как отменить подписку?",
+      answer:
+        "В вашем профиле найдите раздел 'Управление подпиской' и нажмите 'Отменить'.",
+    },
+    {
+      question: "Какие способы оплаты вы принимаете?",
+      answer: "Мы принимаем кредитные карты, PayPal и банковские переводы.",
+    },
+    {
+      question: "Есть ли пробный период?",
+      answer:
+        "Да, мы предлагаем 7-дневный бесплатный пробный период для новых пользователей.",
+    },
+  ];
+
+  const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
     <div className={styles.faqContainer}>
-      <div className={styles.wrapContainer}>
-        <h2 className={styles.title}>Часто задаваемые вопросы</h2>
-        {faqData.map((item, index) => (
-          <div key={index} className={styles.faqItem}>
-            <button
-              className={styles.question}
-              onClick={() => toggleAccordion(index)}
-            >
-              {item.question}
-              <span className={styles.icon}>
-                {openIndex === index ? "−" : "+"}
-              </span>
-            </button>
-            <div
-              className={`${styles.answerWrapper} ${
-                openIndex === index ? styles.open : ""
-              }`}
-            >
-              <p className={styles.answer}>{item.answer}</p>
+      <h1>Часто задаваемые вопросы</h1>
+      {faqs.map((faq, index) => (
+        <div key={index} className={styles.faqItem}>
+          <button
+            className={styles.faqQuestion}
+            onClick={() => toggleFAQ(index)}
+          >
+            <h2>{faq.question}</h2>
+            {openIndex === index ? (
+              <ChevronUp size={24} />
+            ) : (
+              <ChevronDown size={24} />
+            )}
+          </button>
+          {openIndex === index && (
+            <div className={styles.faqAnswer}>
+              <p>{faq.answer}</p>
             </div>
-          </div>
-        ))}
-      </div>
-
-      <div className={styles.supportLink}>
-        <a
-          href="https://t.me/maxksum"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Чат поддержки
-        </a>
-      </div>
+          )}
+        </div>
+      ))}
+      <a
+        href="https://t.me/maxksum"
+        className={styles.askButton}
+      >
+        <MessageCircle size={24} />
+        <span>Задать вопрос</span>
+      </a>
     </div>
   );
 };
 
-export default Faq;
+export default FAQPage;

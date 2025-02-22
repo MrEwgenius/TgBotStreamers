@@ -1,32 +1,35 @@
-"use client";
-import React, { useState } from "react";
+'use client';
 import styles from "./page.module.scss";
 
-const Profile = () => {
-  const subscriptionEndDate = "2025-03-10"; 
-  const [history, setHistory] = useState([
-    { id: 1, input: "5 + 10", result: "15", date: "10.02.2025" },
-    { id: 2, input: "20 * 3", result: "60", date: "09.02.2025" },
-    { id: 3, input: "100 / 4", result: "25", date: "08.02.2025" },
-  ]);
+const ProfilePage = () => {
+  const subscriptionEndDate = "31 декабря 2023";
+  const usageHistory = [
+    // { date: "2023-06-01", action: "Вход в приложение" },
+    // { date: "2023-06-02", action: "Обновление профиля" },
+    // { date: "2023-06-03", action: "Просмотр FAQ" },
+    // { date: "2023-06-04", action: "Изменение подписки" },
+  ];
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>Профиль</h2>
-
-      <div className={styles.subscription}>
-        <p>
-          Подписка активна до:
-          <span className={styles.date}> {subscriptionEndDate}</span>
-        </p>
+    <div className={styles.profileContainer}>
+      <h1>Профиль</h1>
+      <div className={styles.subscriptionInfo}>
+        <h2>Информация о подписке</h2>
+        <p>Ваша подписка действует до: {subscriptionEndDate}</p>
       </div>
-
-      <h3 className={styles.subtitle}>История калькулятора</h3>
-      <div className={styles.history}>
-        <p className={styles.noHistory}>История пуста</p>
+      <div className={styles.usageHistory}>
+        <h2>История использования:</h2>
+        <ul>
+          {usageHistory.map((item, index) => (
+            <li key={index}>
+              <span>{item.date}</span>
+              <span>{item.action}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
 };
 
-export default Profile;
+export default ProfilePage;

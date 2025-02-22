@@ -1,45 +1,49 @@
-"use client"; 
-import { useRouter } from "next/navigation";
+"use client";
+import { useRouter, usePathname } from "next/navigation";
 import styles from "./BottomTabs.module.scss";
+import { Home, User, CreditCard, HelpCircle } from "lucide-react";
 
 export const BottomTabs = () => {
   const router = useRouter();
+  const pathname = usePathname();
+
+  const isActive = (path) => pathname === path;
 
   return (
     <div className={styles.bottomTabs}>
-      <button className={styles.tabButton} onClick={() => router.push("/")}>
-        <img
-          src="https://img.icons8.com/?size=30&id=73&format=png&color=ffffff"
-          alt="home"
-        />
-        <span> Главная</span>
+      <button
+        className={`${styles.tabButton} ${isActive("/") ? styles.active : ""}`}
+        onClick={() => router.push("/")}
+      >
+        <Home size={24} />
+        <span>Главная</span>
       </button>
       <button
-        className={styles.tabButton}
+        className={`${styles.tabButton} ${
+          isActive("/profile") ? styles.active : ""
+        }`}
         onClick={() => router.push("/profile")}
       >
-        <img
-          src="https://img.icons8.com/?size=30&id=23400&format=png&color=ffffff"
-          alt="profile"
-        />
+        <User size={24} />
         <span>Профиль</span>
       </button>
       <button
-        className={styles.tabButton}
+        className={`${styles.tabButton} ${
+          isActive("/subscription") ? styles.active : ""
+        }`}
         onClick={() => router.push("/subscription")}
       >
-        <img
-          src="https://img.icons8.com/?size=30&id=46217&format=png&color=ffffff"
-          alt="subscribe"
-        />
-        <span> Подписка</span>
+        <CreditCard size={24} />
+        <span>Подписка</span>
       </button>
-      <button className={styles.tabButton} onClick={() => router.push("/faq")}>
-        <img
-          src="https://img.icons8.com/?size=25&id=10568&format=png&color=ffffff"
-          alt="questions"
-        />
-        <span> FAQ</span>
+      <button
+        className={`${styles.tabButton} ${
+          isActive("/faq") ? styles.active : ""
+        }`}
+        onClick={() => router.push("/faq")}
+      >
+        <HelpCircle size={24} />
+        <span>FAQ</span>
       </button>
     </div>
   );
