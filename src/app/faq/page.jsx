@@ -44,7 +44,7 @@ const FAQPage = () => {
         </div>
       ))}
       <a href="https://t.me/your_operator_username" className={styles.askButton}>
-        <MessageCircle size={24} />
+        <MessageCircle size={20} />
         <span>Задать вопрос</span>
       </a>
     </div>

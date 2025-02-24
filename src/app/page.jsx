@@ -182,7 +182,6 @@ export default function Home() {
 
  
 
-  const [activeTab, setActiveTab] = useState("calculator"); // По умолчанию активен калькулятор
   return (
     <div className={styles.container}>
       {showPopup && <Popup onClose={() => setShowPopup(false)} />}

@@ -32,7 +32,7 @@ const ProfilePage = () => {
 
   return (
     <div className={styles.profileContainer}>
-      <h1>Профиль пользователя</h1>
+      <h1>Профиль </h1>
       <div className={styles.tabContainer}>
         <button
           className={`${styles.tabButton} ${
@@ -55,10 +55,10 @@ const ProfilePage = () => {
         <div className={styles.subscriptionInfo}>
           <h2>Информация о подписке</h2>
           <p>
-            <strong>Текущий план:</strong> {subscriptionInfo.plan}
+            <span>Текущий план:</span> {subscriptionInfo.plan}
           </p>
           <p>
-            <strong>Действует до:</strong> {subscriptionInfo.endDate}
+            <span>Действует до:</span> {subscriptionInfo.endDate}
           </p>
         </div>
       )}

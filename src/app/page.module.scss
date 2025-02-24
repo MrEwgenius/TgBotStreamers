@@ -5,6 +5,9 @@
   padding-bottom: 75px;
   padding-top: 20px;
   position: relative;
+  .title{
+    font-weight: 400;
+  }
 
   &::before{
     content: '';
@@ -72,6 +75,7 @@
     h2 {
       color: #ffffff;
       margin-bottom: 10px;
+      font-weight: 400;
     }
   }
  
