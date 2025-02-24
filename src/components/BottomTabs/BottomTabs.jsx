@@ -1,16 +1,18 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import styles from "./BottomTabs.module.scss";
 import { Home, User, CreditCard, HelpCircle } from "lucide-react";
 
 const BottomTabs = () => {
   const router = useRouter();
+  const pathname = usePathname();
+
   const [activeTab, setActiveTab] = useState("/");
 
   const handleNavigation = (path) => {
-    setActiveTab(path);
-    router.push(path);
+      setActiveTab(path);
+      router.push(path);
   };
 
   return (
@@ -24,7 +26,7 @@ const BottomTabs = () => {
         <button
           key={path}
           className={`${styles.navButton} ${
-            activeTab === path ? styles.active : ""
+            pathname === path ? styles.active : ""
           }`}
           onClick={() => handleNavigation(path)}
         >

@@ -97,3 +97,98 @@
   }
 }
 
+.historyContainer {
+  background-color: rgba(30, 30, 30, 0.671);
+  border-radius: 12px;
+  padding: 20px;
+  color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  h3{
+    margin-bottom: 20px;
+  }
+}
+
+.historyList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.historyItem {
+  background-color: rgba(40, 40, 40, 0.6);
+  border-radius: 8px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(99, 99, 99, 0.2);
+  }
+}
+
+.historyHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: rgba(60, 60, 60, 0.6);
+  }
+  .headerContent{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+}
+
+.streamerLink {
+  font-weight: bold;
+  color: #00ffcc;
+  max-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calculationDate {
+  color: #b0b0b0;
+  font-size: 14px;
+}
+
+.historyDetails {
+  padding: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  
+
+ 
+
+  p {
+    margin-bottom: 8px;
+    font-size: 14px;
+    overflow-wrap: break-word; /* Альтернативный вариант */
+      white-space: normal;
+
+    span {
+      color: #00ffcc;
+    }
+    span:last-child { // Стиль для числовых значений
+      // white-space: nowrap;
+      color: #ffffff;
+
+      display: inline-block;
+    }
+  }
+}
+
+.emptyHistory {
+  text-align: center;
+  color: #b0b0b0;
+  font-style: italic;
+}
+

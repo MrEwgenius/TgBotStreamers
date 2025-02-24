@@ -60,7 +60,7 @@ export default function Home() {
     Object.keys(formData).forEach((key) => {
       if (!formData[key]) {
         newErrors[key] = "Поле обязательно для заполнения";
-      } else if (key === "streamerLink" && !isValidURL(formData[key])) {
+      } else if (key === "streamerLink" && !isValidStreamerURL(formData[key])) {
         newErrors[key] = "Введите корректную ссылку на стримера";
       }
     });
@@ -68,9 +68,9 @@ export default function Home() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const isValidURL = (url) => {
+  const isValidStreamerURL = (url) => {
     try {
-      const urlPattern = /^(https:\/\/)/;
+      const urlPattern = /^(https:\/\/(www\.)?(twitch\.tv|kick\.com|youtube\.com|youtu\.be)\/)/;
       return urlPattern.test(url);
     } catch (_) {
       return false;
@@ -89,8 +89,8 @@ export default function Home() {
       const newErrors = { ...prev };
       if (!value.trim()) {
         newErrors[name] = "Поле обязательно для заполнения";
-      } else if (name === "streamerLink" && !isValidURL(value)) {
-        newErrors[name] = "Введите корректную ссылку на стримера";
+      } else if (name === "streamerLink" && !isValidStreamerURL(value)) {
+        newErrors[name] = "Введите корректную ссылку на стримера (Twitch, Kick, YouTube)";
       } else {
         delete newErrors[name];
       }
@@ -139,6 +139,14 @@ export default function Home() {
       setResults(result);
       setStreamerLink(formData.streamerLink);
       // console.log("Ответ от сервера:", result);
+      const newHistoryEntry = {
+        date: new Date().toISOString(),
+        streamerLink: formData.streamerLink,
+        results: result,
+      };
+      const storedHistory = JSON.parse(localStorage.getItem("calculationHistory") || "[]");
+      storedHistory.unshift(newHistoryEntry); // Добавляем новый расчёт в начало списка
+      localStorage.setItem("calculationHistory", JSON.stringify(storedHistory));
 
       setFormData({
         streamerLink: "",
@@ -171,6 +179,8 @@ export default function Home() {
       localStorage.setItem("hasSeenPopup", "true");
     }
   }, []);
+
+ 
 
   const [activeTab, setActiveTab] = useState("calculator"); // По умолчанию активен калькулятор
   return (
