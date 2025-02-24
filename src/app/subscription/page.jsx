@@ -1,64 +1,57 @@
-"use client";
-import { useState } from "react";
-import styles from "./page.module.scss";
+"use client"
+
+import { useState } from "react"
+import styles from "./page.module.scss"
+import { Check } from "lucide-react"
 
 const SubscriptionPage = () => {
-  const [activeSubscription, setActiveSubscription]=useState  ("Базовый");
+  const [selectedPlan, setSelectedPlan] = useState(null)
 
-  const subscriptionPlans = [
+  const plans = [
     {
       name: "Базовый",
-      price: "299 ₽/месяц",
-      features: [
-        "Доступ к основным функциям",
-        "Ограниченное количество запросов",
-      ],
+      price: "299 ₽/мес",
+      features: ["Доступ к основным функциям", "Ограниченное количество запросов", "Базовая поддержка"],
     },
     {
       name: "Продвинутый",
-      price: "599 ₽/месяц",
-      features: [
-        "Все функции базового плана",
-        "Неограниченное количество запросов",
-        "Приоритетная поддержка",
-      ],
+      price: "599 ₽/мес",
+      features: ["Все функции базового плана", "Неограниченное количество запросов", "Приоритетная поддержка"],
     },
     {
       name: "Премиум",
-      price: "999 ₽/месяц",
-      features: [
-        "Все функции продвинутого плана",
-        "Эксклюзивные функции",
-        "Персональный менеджер",
-      ],
+      price: "999 ₽/мес",
+      features: ["Все функции продвинутого плана", "Эксклюзивные функции", "Персональный менеджер"],
     },
-  ];
+  ]
 
   return (
     <div className={styles.subscriptionContainer}>
-      <h1>Подписка</h1>
-      {activeSubscription && (
-        <div className={styles.activeSubscription}>
-          <h2>Активная подписка: {activeSubscription}</h2>
-          <p>Действует до: 31 декабря 2023</p>
-        </div>
-      )}
-      <div className={styles.planContainer}>
-        {subscriptionPlans.map((plan, index) => (
-          <div key={index} className={styles.planCard}>
+      <h1>Выберите план подписки</h1>
+      <div className={styles.planGrid}>
+        {plans.map((plan, index) => (
+          <div
+            key={index}
+            className={`${styles.planCard} ${selectedPlan === index ? styles.selected : ""}`}
+            onClick={() => setSelectedPlan(index)}
+          >
             <h2>{plan.name}</h2>
             <p className={styles.price}>{plan.price}</p>
             <ul>
               {plan.features.map((feature, idx) => (
-                <li key={idx}>{feature}</li>
+                <li key={idx}>
+                  <Check size={18} />
+                  {feature}
+                </li>
               ))}
             </ul>
-            <button className={styles.subscribeButton}>Выбрать</button>
+            <button className={styles.selectButton}>{selectedPlan === index ? "Выбрано" : "Выбрать план"}</button>
           </div>
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SubscriptionPage;
+export default SubscriptionPage
+

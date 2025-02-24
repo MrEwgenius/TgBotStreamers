@@ -1,28 +1,43 @@
 .faqContainer {
+  position: relative;
   padding: 20px;
   color: #ffffff;
   min-height: 100vh;
-  padding-bottom: 80px;
-  position: relative;
+  padding-bottom: 120px;
 
   h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #ffffff;
+    font-size: 28px;
+    margin-bottom: 30px;
     text-align: center;
+    background: #ffffff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  &::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
   }
 }
 
 .faqItem {
-  background-color: #1e1e1e;
-  border-radius: 8px;
-  margin-bottom: 15px;
+  background-color: rgba(66, 66, 66, 0.6);
+  border-radius: 12px;
+  margin-bottom: 20px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  
 
   &:hover {
-    transform: translateY(-2px);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(112, 112, 112, 0.2);
   }
 }
 
@@ -31,29 +46,29 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 15px;
+  padding: 20px;
   background: none;
   border: none;
   text-align: left;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #2a2a2a;
-  }
+  transition: all 0.3s ease;
 
   h2 {
     font-size: 18px;
     color: #e0e0e0;
     margin: 0;
   }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
 }
 
 .faqAnswer {
-  padding: 0 15px 15px;
-
+  padding: 0 20px 20px;
+  
   p {
-    font-size: 14px;
+    font-size: 16px;
     color: #b0b0b0;
     margin: 0;
     line-height: 1.6;
@@ -67,20 +82,18 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background-color: #007bff;
+  background: #444444;
   color: #ffffff;
   text-decoration: none;
-  padding: 12px 20px;
+  padding: 6px 12px;
   border-radius: 30px;
   font-size: 16px;
-  font-weight: bold;
-  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(180, 180, 180, 0.3);
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(131, 131, 131, 0.4);
   }
 
   span {
@@ -91,3 +104,4 @@
     transform: translateX(5px);
   }
 }
+

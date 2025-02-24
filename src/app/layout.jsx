@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.scss";
 import { Roboto } from "next/font/google";
-import { BottomTabs } from "@/components/BottomTabs/BottomTabs";
+import BottomTabs from "@/components/BottomTabs/BottomTabs";
 const inter = Roboto({ subsets: ['latin'], weight: ["400"] });
 
 
