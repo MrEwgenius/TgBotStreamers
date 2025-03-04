@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import styles from "./page.module.scss";
 import InputGroup from "@/components/InputGroup/InputGroup";
 import GeoSelect from "@/components/Select/GeoSelect";
@@ -8,14 +8,10 @@ import { geoOptions } from "@/config/geoOptions";
 import PayButton from "@/components/PayButton/PayButton";
 import { Popup } from "@/components/Popup/Popup";
 import { BottomTabs } from "@/components/BottomTabs/BottomTabs";
-import { useSearchParams } from "next/navigation"; 
-
+import SearchParamsComponent from "@/components/SearchParamsComponent/SearchParamsComponent";
 
 export default function Home() {
-  const searchParams = useSearchParams();
-  const userIdFromUrl = searchParams.get("client_id");
-  
-  console.log( userIdFromUrl);
+
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     streamerLink: "",
@@ -76,7 +72,8 @@ export default function Home() {
 
   const isValidStreamerURL = (url) => {
     try {
-      const urlPattern = /^(https:\/\/(www\.)?(twitch\.tv|kick\.com|youtube\.com|youtu\.be)\/)/;
+      const urlPattern =
+        /^(https:\/\/(www\.)?(twitch\.tv|kick\.com|youtube\.com|youtu\.be)\/)/;
       return urlPattern.test(url);
     } catch (_) {
       return false;
@@ -96,7 +93,8 @@ export default function Home() {
       if (!value.trim()) {
         newErrors[name] = "Поле обязательно для заполнения";
       } else if (name === "streamerLink" && !isValidStreamerURL(value)) {
-        newErrors[name] = "Введите корректную ссылку на стримера (Twitch, Kick, YouTube)";
+        newErrors[name] =
+          "Введите корректную ссылку на стримера (Twitch, Kick, YouTube)";
       } else {
         delete newErrors[name];
       }
@@ -150,7 +148,9 @@ export default function Home() {
         streamerLink: formData.streamerLink,
         results: result,
       };
-      const storedHistory = JSON.parse(localStorage.getItem("calculationHistory") || "[]");
+      const storedHistory = JSON.parse(
+        localStorage.getItem("calculationHistory") || "[]"
+      );
       storedHistory.unshift(newHistoryEntry); // Добавляем новый расчёт в начало списка
       localStorage.setItem("calculationHistory", JSON.stringify(storedHistory));
 
@@ -186,14 +186,16 @@ export default function Home() {
     }
   }, []);
 
- 
-
   return (
     <div className={styles.container}>
       {showPopup && <Popup onClose={() => setShowPopup(false)} />}
       <form className={styles.form} onSubmit={handleSubmit}>
         <h2 className={styles.title}>Введите данные</h2>
-      <div>{userIdFromUrl}</div>
+        <Suspense fallback={<div>Загрузка...</div>}>
+          <div>
+            <SearchParamsComponent />
+          </div>
+        </Suspense>
         <GeoSelect
           key={formData.geo}
           label="Выберите ГЕО"
@@ -256,7 +258,6 @@ export default function Home() {
           </p>
         </div>
       )}
-     
     </div>
   );
 }
