@@ -13,7 +13,7 @@ import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const searchParams = useSearchParams();
-  const userIdFromUrl = searchParams.get("user_id");
+  const userIdFromUrl = searchParams.get("client_id");
   
   console.log( userIdFromUrl);
   const [errors, setErrors] = useState({});
