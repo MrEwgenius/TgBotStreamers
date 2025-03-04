@@ -8,8 +8,14 @@ import { geoOptions } from "@/config/geoOptions";
 import PayButton from "@/components/PayButton/PayButton";
 import { Popup } from "@/components/Popup/Popup";
 import { BottomTabs } from "@/components/BottomTabs/BottomTabs";
+import { useSearchParams } from "next/navigation"; 
+
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const userIdFromUrl = searchParams.get("user_id");
+  
+  console.log( userIdFromUrl);
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     streamerLink: "",
@@ -187,6 +193,7 @@ export default function Home() {
       {showPopup && <Popup onClose={() => setShowPopup(false)} />}
       <form className={styles.form} onSubmit={handleSubmit}>
         <h2 className={styles.title}>Введите данные</h2>
+      <div>{userIdFromUrl}</div>
         <GeoSelect
           key={formData.geo}
           label="Выберите ГЕО"
