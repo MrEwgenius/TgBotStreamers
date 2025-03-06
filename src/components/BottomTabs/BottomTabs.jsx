@@ -11,17 +11,17 @@ const BottomTabs = () => {
   const [activeTab, setActiveTab] = useState("/");
 
   const handleNavigation = (path) => {
-      setActiveTab(path);
-      router.push(path);
+    setActiveTab(path);
+    router.push(path);
   };
 
   return (
     <nav className={styles.bottomNav}>
       {[
         { icon: Home, path: "/", label: "Главная" },
-        { icon: User, path: "/profile", label: "Профиль" },
         { icon: CreditCard, path: "/subscription", label: "Подписка" },
         { icon: HelpCircle, path: "/faq", label: "FAQ" },
+        { icon: User, path: "/profile", label: "Профиль" },
       ].map(({ icon: Icon, path, label }) => (
         <button
           key={path}

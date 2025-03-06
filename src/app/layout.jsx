@@ -1,8 +1,8 @@
 import localFont from "next/font/local";
 import "./globals.scss";
-import { Roboto } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
-const inter = Roboto({ subsets: ['latin'], weight: ["400"] });
+const inter = Montserrat({ subsets: ['latin'], weight: ["400"] });
 
 
 export const metadata = {

@@ -1,15 +1,24 @@
 .container {
   max-width: 100%;
-  margin:  auto;
+  margin: auto;
   padding: 0 15px;
   padding-bottom: 75px;
   padding-top: 20px;
   position: relative;
-  .title{
+  background-color: #000000;
+  min-height: 100vh;
+  color: #ffffff;
+
+  .title {
     font-weight: 400;
+    font-size: 32px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    color: #ffffff;
+    max-width: 600px;
   }
 
-  &::before{
+  &::before {
     content: '';
     position: absolute;
     top: 0;
@@ -19,37 +28,46 @@
     background: rgba(0, 0, 0, 0.5);
     z-index: -1;
   }
+
   .form {
     max-width: 600px;
-    border: 1px solid #f7a077;
-    padding: 20px;
-    border-radius: 10px;
-    // background-color: #e4dede;
-
+    padding: 0;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-  .button {
-    width: 200px;
-    height: 50px;
     border: none;
-    background-color: #f5f4f1;
-    color: #000000;
-    border: 1px solid #ffffff;
-    cursor: pointer;
-    font-size: 20px;
-    border-radius: 10px;
-    margin-top: 30px;
   }
+
+  .button {
+    width: 100%;
+    height: 56px;
+    border: none;
+    background-color: #0088ff;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 8px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #0077dd;
+    }
+  }
+  .buttonDisabled {
+    background-color: #515253;
+    cursor: not-allowed;
+    
+    &:hover {
+      background-color: #515253;
+    }
+  }
+
   .results {
     max-width: 600px;
-    border: 1px solid #ffffff;
+    border: 1px solid #1a1a1c;
     border-radius: 10px;
     padding: 15px;
     margin: 20px auto 0;
@@ -58,25 +76,33 @@
     justify-content: center;
     gap: 10px;
     color: #ffffff;
+    background-color: #1a1a1c;
+    
     p {
       color: #ffffff;
-      // word-break: break-all; /* Ломает длинные слова и переносит их */
-      overflow-wrap: break-word; /* Альтернативный вариант */
+      overflow-wrap: break-word;
       white-space: normal;
+      
       span {
         color: #ffffff;
         font-weight: 700;
       }
-      span:last-child { // Стиль для числовых значений
-        // white-space: nowrap;
+      
+      span:last-child {
         display: inline-block;
       }
     }
+    
     h2 {
       color: #ffffff;
       margin-bottom: 10px;
       font-weight: 400;
     }
   }
- 
+
+  .rocketIcon {
+    display: inline-block;
+    margin-left: 5px;
+  }
 }
+

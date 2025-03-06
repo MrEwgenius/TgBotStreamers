@@ -1,97 +1,82 @@
-.field {
+.fieldContainer {
   position: relative;
-  border-bottom: 2px solid #ccc;
-  margin: 15px 0;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.fieldLabel {
+  display: block;
+  color: #ffffff;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.inputWrapper {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  .input {
-    width: 100%;
-    height: 40px;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    color: #fff;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  height: 56px;
+  background-color: #1a1a1c;
+  border: none;
+  border-radius: 8px;
+  padding: 0 48px 0 16px;
+  color: #ffffff;
+  font-size: 16px;
+  outline: none;
+
+  &::placeholder {
+    color: #9c9c9c;
   }
-  .input[type="number"]::-webkit-outer-spin-button,
-  .input[type="number"]::-webkit-inner-spin-button {
+
+  &[type="number"]::-webkit-outer-spin-button,
+  &[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-  .input[type="number"] {
+  &[type="number"] {
     -moz-appearance: textfield;
   }
-  label {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    color: #fff;
-    font-size: 16px;
-    pointer-events: none;
-    transition: 0.15s ease;
-  }
-
-  .error {
-    position: absolute;
-    bottom: -17px;
-    left: 0;
-    color: red;
-    font-size: 12px;
-  }
-
-  .hintIcon {
-    position: absolute;
-    top: 50%;
-    right: -5px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #fff;
-
-    &:hover {
-      color: #bb3838;
-    }
-  }
-
-  .hint {
-    position: absolute;
-    top: 110%;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    font-size: 12px;
-    padding: 8px;
-    border-radius: 4px;
-    width: 92%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-  }
 }
-.hintActive {
-  background-color: red;
+
+.infoIcon {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
 }
-.hintInActive {
-  background-color: blue;
-}
+
 .errorInput {
-  border-bottom: 2px solid red;
-
-}
-.field input:focus ~ label,
-.errorInput label,
-.field input:valid ~ label,
-.field input:not(:placeholder-shown) ~ label {
-  font-size: 0.8rem;
-  top: 10px;
-  transform: translateY(-120%);
+  border: 1px solid #ff0000;
 }
 
-// .field,
-// .errorInput label {
-//   top: -10px;
-//   transform: translateY(-120%);
-//   font-size: 0.8rem;
-// }
+.errorMessage {
+  color: #ff0000;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 0%;
+  margin-top: 9px;
+}
+
+.infoText {
+  color: #ffffff;
+  margin-top: 8px;
+  font-family: Montserrat;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 0%;
+}

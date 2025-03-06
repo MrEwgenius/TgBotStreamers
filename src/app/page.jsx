@@ -1,18 +1,15 @@
-"use client";
-import { Suspense, useEffect, useRef, useState } from "react";
-import styles from "./page.module.scss";
-import InputGroup from "@/components/InputGroup/InputGroup";
-import GeoSelect from "@/components/Select/GeoSelect";
-import { fieldsConfig } from "@/config/fieldsConfig";
-import { geoOptions } from "@/config/geoOptions";
-import PayButton from "@/components/PayButton/PayButton";
-import { Popup } from "@/components/Popup/Popup";
-import { BottomTabs } from "@/components/BottomTabs/BottomTabs";
-import SearchParamsComponent from "@/components/SearchParamsComponent/SearchParamsComponent";
+"use client"
+import { useEffect, useRef, useState } from "react"
+import styles from "./page.module.scss"
+import InputGroup from "@/components/InputGroup/InputGroup"
+import GeoSelect from "@/components/Select/GeoSelect"
+import { fieldsConfig } from "@/config/fieldsConfig"
+import { geoOptions } from "@/config/geoOptions"
+import { Popup } from "@/components/Popup/Popup"
+import BottomTabs from "@/components/BottomTabs/BottomTabs"
 
 export default function Home() {
-
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({})
   const [formData, setFormData] = useState({
     streamerLink: "",
     broadcasts: "",
@@ -24,135 +21,154 @@ export default function Home() {
     performancePrice: "",
     agentCommission: "",
     geo: null,
-  });
+  })
+  const [isFormValid, setIsFormValid] = useState(false)
+  const [results, setResults] = useState(null)
+  const [streamerLink, setStreamerLink] = useState("")
+  const [activeHint, setActiveHint] = useState(null)
+  const [showPopup, setShowPopup] = useState(false)
 
-  const [results, setResults] = useState(null);
-  const [streamerLink, setStreamerLink] = useState("");
-  const [activeHint, setActiveHint] = useState(null);
-  const [showPopup, setShowPopup] = useState(false);
+  const formRef = useRef(null)
+  const resultsRef = useRef(null)
 
-  const formRef = useRef(null);
-  const resultsRef = useRef(null);
+  // Проверка валидности формы при изменении данных
+  useEffect(() => {
+    const checkFormValidity = () => {
+      // Проверяем, что все поля заполнены и нет ошибок
+      const allFieldsFilled = Object.keys(formData).every((key) => {
+        return formData[key] !== null && formData[key] !== ""
+      })
+
+      const noErrors = Object.keys(errors).length === 0
+
+      // Дополнительная проверка для streamerLink
+      const isStreamerLinkValid = formData.streamerLink ? isValidStreamerURL(formData.streamerLink) : false
+
+      setIsFormValid(allFieldsFilled && noErrors && isStreamerLinkValid)
+    }
+
+    checkFormValidity()
+  }, [formData, errors])
 
   // Закрытие подсказки при клике вне формы или другого поля
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (formRef.current && !formRef.current.contains(event.target)) {
-        setActiveHint(null); // Сбрасываем активную подсказку
+        setActiveHint(null) // Сбрасываем активную подсказку
       }
-    };
+    }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
 
   const handleGeoChange = (selectedOption) => {
-    setFormData((prev) => ({ ...prev, geo: selectedOption }));
-    setErrors((prev) => ({
-      ...prev,
-      geo: selectedOption ? null : "Выберите ГЕО",
-    }));
-    setActiveHint(null);
-  };
+    setFormData((prev) => ({ ...prev, geo: selectedOption }))
+    setErrors((prev) => {
+      const newErrors = { ...prev }
+      if (selectedOption) {
+        delete newErrors.geo
+      } else {
+        newErrors.geo = "Выберите ГЕО"
+      }
+      return newErrors
+    })
+    setActiveHint(null)
+  }
 
   const validateFields = () => {
-    const newErrors = {};
+    const newErrors = {}
     Object.keys(formData).forEach((key) => {
       if (!formData[key]) {
-        newErrors[key] = "Поле обязательно для заполнения";
+        newErrors[key] = "Поле обязательно для заполнения"
       } else if (key === "streamerLink" && !isValidStreamerURL(formData[key])) {
-        newErrors[key] = "Введите корректную ссылку на стримера";
+        newErrors[key] = "Введите корректную ссылку на стримера (Twitch, Kick, YouTube)"
       }
-    });
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+    })
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const isValidStreamerURL = (url) => {
     try {
-      const urlPattern =
-        /^(https:\/\/(www\.)?(twitch\.tv|kick\.com|youtube\.com|youtu\.be)\/)/;
-      return urlPattern.test(url);
+      const urlPattern = /^(https:\/\/(www\.)?(twitch\.tv|kick\.com|youtube\.com|youtu\.be)\/)/
+      return urlPattern.test(url)
     } catch (_) {
-      return false;
+      return false
     }
-  };
+  }
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
 
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }));
+    }))
 
     setErrors((prev) => {
-      const newErrors = { ...prev };
+      const newErrors = { ...prev }
       if (!value.trim()) {
-        newErrors[name] = "Поле обязательно для заполнения";
+        newErrors[name] = "Поле обязательно для заполнения"
       } else if (name === "streamerLink" && !isValidStreamerURL(value)) {
-        newErrors[name] =
-          "Введите корректную ссылку на стримера (Twitch, Kick, YouTube)";
+        newErrors[name] = "Введите корректную ссылку на стримера (Twitch, Kick, YouTube)"
       } else {
-        delete newErrors[name];
+        delete newErrors[name]
       }
-      return newErrors;
-    });
-  };
+      return newErrors
+    })
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       if (!formData.geo) {
-        setErrors((prev) => ({ ...prev, geo: "Выберите ГЕО" }));
-        return;
+        setErrors((prev) => ({ ...prev, geo: "Выберите ГЕО" }))
+        return
       }
       if (!validateFields()) {
-        console.log("Валидация не пройдена");
-        return;
+        console.log("Валидация не пройдена")
+        return
       }
 
       const transformedData = {
         ...formData,
-        broadcasts: parseInt(formData.broadcasts),
-        ftdCount: parseInt(formData.ftdCount),
-        ftdSum: parseFloat(formData.ftdSum),
-        depositsCount: parseInt(formData.depositsCount),
-        depositsSum: parseFloat(formData.depositsSum),
-        geoBet: parseInt(formData.geoBet),
-        performancePrice: parseFloat(formData.performancePrice),
-        agentCommission: parseInt(formData.agentCommission),
-      };
+        broadcasts: Number.parseInt(formData.broadcasts),
+        ftdCount: Number.parseInt(formData.ftdCount),
+        ftdSum: Number.parseFloat(formData.ftdSum),
+        depositsCount: Number.parseInt(formData.depositsCount),
+        depositsSum: Number.parseFloat(formData.depositsSum),
+        geoBet: Number.parseInt(formData.geoBet),
+        performancePrice: Number.parseFloat(formData.performancePrice),
+        agentCommission: Number.parseInt(formData.agentCommission),
+      }
 
-      // console.log("Отправка данных:", transformedData);
       const response = await fetch("https://holstenmain.com/api/calculate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(transformedData),
-      });
+      })
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`)
       }
 
-      const result = await response.json();
-      setResults(result);
-      setStreamerLink(formData.streamerLink);
-      // console.log("Ответ от сервера:", result);
+      const result = await response.json()
+      setResults(result)
+      setStreamerLink(formData.streamerLink)
+
       const newHistoryEntry = {
         date: new Date().toISOString(),
         streamerLink: formData.streamerLink,
         results: result,
-      };
-      const storedHistory = JSON.parse(
-        localStorage.getItem("calculationHistory") || "[]"
-      );
-      storedHistory.unshift(newHistoryEntry); // Добавляем новый расчёт в начало списка
-      localStorage.setItem("calculationHistory", JSON.stringify(storedHistory));
+      }
+      const storedHistory = JSON.parse(localStorage.getItem("calculationHistory") || "[]")
+      storedHistory.unshift(newHistoryEntry) // Добавляем новый расчёт в начало списка
+      localStorage.setItem("calculationHistory", JSON.stringify(storedHistory))
 
       setFormData({
         streamerLink: "",
@@ -165,40 +181,49 @@ export default function Home() {
         performancePrice: "",
         agentCommission: "",
         geo: null,
-      });
+      })
+
+      // Сбрасываем состояние валидности формы
+      setIsFormValid(false)
     } catch (error) {
-      console.error("Ошибка при отправке:", error);
+      console.error("Ошибка при отправке:", error)
     }
-  };
+  }
+
   // Скролл вниз при появлении результатов
   useEffect(() => {
     if (results && resultsRef.current) {
-      resultsRef.current.scrollIntoView({ behavior: "smooth" });
+      resultsRef.current.scrollIntoView({ behavior: "smooth" })
     }
-  }, [results]);
+  }, [results])
 
   // Проверка первого посещения
   useEffect(() => {
-    const hasSeenPopup = localStorage.getItem("hasSeenPopup");
+    const hasSeenPopup = localStorage.getItem("hasSeenPopup")
     if (!hasSeenPopup) {
-      setShowPopup(true);
-      localStorage.setItem("hasSeenPopup", "true");
+      setShowPopup(true)
+      localStorage.setItem("hasSeenPopup", "true")
     }
-  }, []);
+  }, [])
 
   return (
     <div className={styles.container}>
       {showPopup && <Popup onClose={() => setShowPopup(false)} />}
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <h2 className={styles.title}>Введите данные</h2>
-        <Suspense fallback={<div>Загрузка...</div>}>
+      <form className={styles.form} ref={formRef} onSubmit={handleSubmit}>
+        <h2 className={styles.title}>
+          Рассчитайте реальную стоимость интеграции стримера
+          <span className={styles.rocketIcon}>🚀</span>
+        </h2>
+
+        {/* <Suspense fallback={<div>Загрузка...</div>}>
           <div>
             <SearchParamsComponent />
           </div>
-        </Suspense>
+        </Suspense> */}
+
         <GeoSelect
           key={formData.geo}
-          label="Выберите ГЕО"
+          label="ГЕО"
           options={geoOptions}
           value={formData.geo}
           onChange={handleGeoChange}
@@ -206,6 +231,7 @@ export default function Home() {
           activeHint={activeHint}
           setActiveHint={setActiveHint}
         />
+
         {fieldsConfig.map((field) => (
           <InputGroup
             key={field.name}
@@ -215,15 +241,21 @@ export default function Home() {
             errors={errors}
             label={field.label}
             hint={field.hint}
+            placeholder={field.placeholder}
             activeHint={activeHint}
             setActiveHint={setActiveHint}
           />
         ))}
 
-        <button type="submit" className={styles.button}>
+        <button
+          type="submit"
+          className={`${styles.button} ${!isFormValid ? styles.buttonDisabled : ""}`}
+          disabled={!isFormValid}
+        >
           Отправить
         </button>
       </form>
+
       {/* Итоги расчётов */}
       {results && (
         <div className={styles.results} ref={resultsRef}>
@@ -235,8 +267,7 @@ export default function Home() {
             <span>Цена заказчика: </span> <span>{results.clientPrice} $</span>
           </p>
           <p>
-            <span>Средняя сумма чека одного FTD:</span>{" "}
-            <span>{results.avgFtdAmount} $</span>
+            <span>Средняя сумма чека одного FTD:</span> <span>{results.avgFtdAmount} $</span>
           </p>
           <p>
             <span>Цена 1 игрока:</span> <span>{results.pricePerPlayer} $</span>
@@ -258,6 +289,9 @@ export default function Home() {
           </p>
         </div>
       )}
+
+      <BottomTabs />
     </div>
-  );
+  )
 }
+
