@@ -8,6 +8,7 @@ const inter = Montserrat({ subsets: ['latin'], weight: ["400"] });
 export const metadata = {
   title: "TG Bot",
   description: "Tg boots",
+  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover",
 };
 
 export default function RootLayout({ children }) {
