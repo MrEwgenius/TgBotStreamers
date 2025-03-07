@@ -15,9 +15,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ru">
-      <script src="src/config/tgMiniApp.js">
-        
-      </script>
       <body className={inter.className}>
         <div className="content">{children}</div>
         <BottomTabs />
