@@ -86,11 +86,15 @@
       white-space: normal;
 
       span {
-        color: #ffffff;
-        font-weight: 700;
+        color: #a3a3a3;
+        font-size: 14px;
       }
-
+      
       span:last-child {
+        font-weight: 700;
+        color: #ffffff;
+        font-size: 14px;
+
         display: inline-block;
       }
     }

@@ -261,7 +261,7 @@ export default function Home() {
         <div className={styles.results} ref={resultsRef}>
           <h2>Итоги расчётов</h2>
           <p>
-            <span>Стример:</span> {streamerLink}
+            <span>Стример:</span> <span>{streamerLink}</span>
           </p>
           <p>
             <span>Цена заказчика: </span> <span>{results.clientPrice} $</span>
