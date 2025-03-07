@@ -7,9 +7,11 @@ import { fieldsConfig } from "@/config/fieldsConfig"
 import { geoOptions } from "@/config/geoOptions"
 import { Popup } from "@/components/Popup/Popup"
 import BottomTabs from "@/components/BottomTabs/BottomTabs"
-import { useTelegramMiniApp } from "@/config/tgMiniApp"
+import { useTelegramViewport } from "@/config/tgMiniApp"
 
 export default function Home() {
+  useTelegramViewport()
+ 
   const [errors, setErrors] = useState({})
   const [formData, setFormData] = useState({
     streamerLink: "",
@@ -206,7 +208,7 @@ export default function Home() {
       localStorage.setItem("hasSeenPopup", "true")
     }
   }, [])
-  useTelegramMiniApp()
+  
 
   return (
     <div className={styles.container}>
