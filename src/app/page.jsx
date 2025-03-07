@@ -211,7 +211,7 @@ export default function Home() {
       {showPopup && <Popup onClose={() => setShowPopup(false)} />}
       <form className={styles.form} ref={formRef} onSubmit={handleSubmit}>
         <h2 className={styles.title}>
-          Рассчитайте реальную стоимость интеграции стримера
+          Рассчитайте <br /> реальную стоимость <br /> интеграции стримера
           <span className={styles.rocketIcon}>🚀</span>
         </h2>
 

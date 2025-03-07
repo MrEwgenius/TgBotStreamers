@@ -25,7 +25,7 @@ const SubscriptionPage = () => {
   return (
     <div className={styles.subscriptionContainer}>
       <h1 className={styles.title}>
-        Подберите <br />  для себя лучший <br /> вариант подписки
+        Подберите <br />  для себя лучший <br /> вариант подписки 
         <Check className={styles.checkIcon} size={20} />
       </h1>
 

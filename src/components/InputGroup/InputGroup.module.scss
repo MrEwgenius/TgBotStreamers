@@ -9,6 +9,10 @@
   color: #ffffff;
   font-size: 16px;
   margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
 }
 
 .inputWrapper {
@@ -64,11 +68,11 @@
 
 .errorMessage {
   color: #ff0000;
-  font-weight: 400;
   font-size: 14px;
-  line-height: 14px;
   letter-spacing: 0%;
   margin-top: 9px;
+  font-weight: 400;
+  line-height: 100%;
 }
 
 .infoText {

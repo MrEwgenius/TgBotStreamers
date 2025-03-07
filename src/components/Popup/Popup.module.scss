@@ -1,91 +1,109 @@
 .popupOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.popupContent {
+  background: #1a1a1c;
+  padding: 20px;
+  border-radius: 16px;
+  max-width: 360px;
+  width: 90%;
+  text-align: left;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.title {
+  color: #ffffff;
+  margin-bottom: 16px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 120%;
+  letter-spacing: 0%;
+}
+
+.subtitle {
+  color: #ffffff;
+  margin-bottom: 24px;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  span {
+    color: #ffffff;
+    font-size: 14px;
   }
-  
-  .popupContent {
-    background: #fff;
-    padding: 24px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
-    text-align: center;
-    animation: fadeIn 0.3s ease-in-out;
+}
+
+.featureList {
+  margin-bottom: 30px;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 120%;
+  letter-spacing: 0%;
+}
+
+.checkIcon {
+  background-color: #ffffff;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.checkIcon svg {
+  color: #1a1a1c;
+  width: 14px;
+  height: 14px;
+}
+
+.button {
+  width: 100%;
+  padding: 20px;
+  background-color: #0088ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: 0%;
+}
+
+.button:hover {
+  background-color: #0077e6;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
   }
-  
-  .popupContent h2 {
-    font-size: 22px;
-    color: #333;
-    margin-bottom: 12px;
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
-  
-  .popupContent p {
-    font-size: 16px;
-    color: #444;
-    margin-bottom: 8px;
-  }
-  
-  .popupContent h3 {
-    font-size: 18px;
-    color: #222;
-    margin-top: 12px;
-  }
-  
-  .infoContainer {
-    background: #f7f7f7;
-    padding: 10px;
-    border-radius: 8px;
-    margin-top: 10px;
-    text-align: left;
-  }
-  
-  .popupCloseButton {
-    margin-top: 16px;
-    padding: 10px 16px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-    background: #ff5252;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .popupCloseButton:hover {
-    background: #e04848;
-  }
-  
-  /* Анимация появления */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-  
-  /* Зачеркнутый текст */
-  .strikeThrough {
-    text-decoration: line-through;
-    color: #888;
-  }
-  
-  .freeHighlight {
-    color: #27ae60;
-    font-weight: bold;
-  }
-  
+}

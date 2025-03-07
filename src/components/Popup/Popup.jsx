@@ -1,24 +1,43 @@
+"use client";
+
 import styles from "./Popup.module.scss";
+import { Check } from "lucide-react";
 
 export const Popup = ({ onClose }) => {
   return (
     <div className={styles.popupOverlay}>
       <div className={styles.popupContent}>
-        <h2>Начни бесплатно – получи доступ к премиальному контенту</h2>
-        <p>
-          🔹 Подписка на месяц – <span className={styles.strikeThrough}>$9.99</span>{" "}
-          → <span className={styles.freeHighlight}>БЕСПЛАТНО на первый месяц!</span>
-        </p>
-        <p>🔹 Подписка на год – $99.9</p>
-        <h3>⚡ Как это работает?</h3>
-        <div className={styles.infoContainer}>
-          <p>1️⃣ Подпишись и получи доступ без оплаты на первый месяц</p>
-          <p>
-            2️⃣ Вся важная информация и уведомления приходят через Telegram-бот
-          </p>
+        <h2 className={styles.title}>
+          Получи доступ к премиальному контенту 💰
+        </h2>
+
+        <p className={styles.subtitle}>Первый месяц подписки <span>БЕСПЛАТНО</span></p>
+
+        <div className={styles.featureList}>
+          <div className={styles.featureItem}>
+            <span className={styles.checkIcon}>
+              <Check size={14} />
+            </span>
+            Доступ к основным функциям
+          </div>
+
+          <div className={styles.featureItem}>
+            <span className={styles.checkIcon}>
+              <Check size={14} />
+            </span>
+            Ограниченное кол-во запросов
+          </div>
+
+          <div className={styles.featureItem}>
+            <span className={styles.checkIcon}>
+              <Check size={14} />
+            </span>
+            Базовая поддержка
+          </div>
         </div>
-        <button onClick={onClose} className={styles.popupCloseButton}>
-          Закрыть
+
+        <button onClick={onClose} className={styles.button}>
+          Выбрать план
         </button>
       </div>
     </div>

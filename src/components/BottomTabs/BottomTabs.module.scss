@@ -6,36 +6,40 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: rgba(18, 18, 18, 0.8);
-  backdrop-filter: blur(10px);
-  padding: 10px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: #000000;
+  padding: 12px 0;
+  z-index: 100;
 }
 
 .navButton {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background: none;
   border: none;
-  color: #888;
-  transition: all 0.3s ease;
+  color: #9c9c9c;
+  transition: all 0.2s ease;
+  width: 25%;
+  padding: 8px 0;
 
   span {
-    font-size: 12px;
     margin-top: 4px;
-    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 120%;
+    letter-spacing: 0%;
   }
 
   &.active {
-    color: #fff;
-
-    span {
-      transform: translateY(-2px);
-    }
+    color: #ffffff;
   }
 
   &:hover {
-    color: #fff;
+    color: #ffffff;
   }
+}
+
+.icon {
+  margin-bottom: 2px;
 }

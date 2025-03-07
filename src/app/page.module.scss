@@ -2,7 +2,7 @@
   max-width: 100%;
   margin: auto;
   padding: 0 15px;
-  padding-bottom: 75px;
+  padding-bottom: 135px;
   padding-top: 20px;
   position: relative;
   background-color: #000000;
@@ -10,16 +10,18 @@
   color: #ffffff;
 
   .title {
-    font-weight: 400;
-    font-size: 32px;
-    line-height: 1.2;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
     margin-bottom: 10px;
     color: #ffffff;
     max-width: 600px;
   }
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -49,7 +51,7 @@
     cursor: pointer;
     font-size: 18px;
     border-radius: 8px;
-    margin-top: 10px;
+    margin-top: 5px;
     transition: background-color 0.3s;
 
     &:hover {
@@ -59,7 +61,7 @@
   .buttonDisabled {
     background-color: #515253;
     cursor: not-allowed;
-    
+
     &:hover {
       background-color: #515253;
     }
@@ -77,22 +79,22 @@
     gap: 10px;
     color: #ffffff;
     background-color: #1a1a1c;
-    
+
     p {
       color: #ffffff;
       overflow-wrap: break-word;
       white-space: normal;
-      
+
       span {
         color: #ffffff;
         font-weight: 700;
       }
-      
+
       span:last-child {
         display: inline-block;
       }
     }
-    
+
     h2 {
       color: #ffffff;
       margin-bottom: 10px;
@@ -102,7 +104,6 @@
 
   .rocketIcon {
     display: inline-block;
-    margin-left: 5px;
+    font-size: 26px;
   }
 }
-

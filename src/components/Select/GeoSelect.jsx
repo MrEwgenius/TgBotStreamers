@@ -78,14 +78,14 @@ const GeoSelect = ({ label, options, value, onChange, error, activeHint, setActi
             {value ? <div className={styles.value}>{value.label}</div> : <div className={styles.empty}>Выберите</div>}
           </div>
 
-          <button type="button" className={styles.infoIcon} onClick={toggleHint} aria-label="Показать информацию">
+          {!isOpen && <button type="button" className={styles.infoIcon} onClick={toggleHint} aria-label="Показать информацию">
             <QuestionSVG color={isHintVisible ? "#0088ff" : "#ffffff"} />
-          </button>
+          </button>}
         </div>
 
         {error && <div className={styles.errorMessage}>{error}</div>}
 
-        {isHintVisible && (
+        {isHintVisible && !isOpen && (
           <div className={styles.infoText}>Выберите регион, для которого вы хотите рассчитать стоимость интеграции</div>
         )}
 

@@ -205,7 +205,7 @@ const ProfilePage = () => {
                               <span className={styles.value}>{item.results.priceDifference}%</span>
                             </p>
                             <p>
-                              <span className={styles.longLabel}>Предлагаемое уменьшение цены стримера:</span>{" "}
+                              <span className={styles.longLabel}>Предлагаемое уменьшение цены стримера:</span>
                               <span className={styles.value}>{item.results.proposedDiscount}%</span>
                             </p>
                             <p>
