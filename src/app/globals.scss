@@ -1,27 +1,23 @@
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000000;
-    --foreground: #ededed;
-  }
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
 html,
 body {
   height: 100%;
-  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
   overscroll-behavior: none;
   touch-action: pan-y;
-  background: #000000 !important;
+  background: var(--background) !important;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 body {
   color: var(--foreground);
-  background: #000000 !important;
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -33,16 +29,67 @@ body {
   padding: 0;
   margin: 0;
 }
+
 ul > li {
   list-style: none;
 }
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-.content {
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  height: 100%;
-  padding-bottom: 45px;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 20px;
+}
+
+.form {
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: none;
+}
+
+.button {
+  width: 100%;
+  height: 56px;
+  border: none;
+  background-color: #0088ff;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 8px;
+  margin-top: 5px;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #0077dd;
+}
+
+.buttonDisabled {
+  background-color: #515253;
+  cursor: not-allowed;
+}
+
+.buttonDisabled:hover {
+  background-color: #515253;
+}
+
+.content {
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }

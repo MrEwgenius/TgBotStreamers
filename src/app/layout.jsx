@@ -1,6 +1,5 @@
 import "./globals.scss";
 import { Montserrat } from "next/font/google";
-import Script from "next/script";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
 
 const inter = Montserrat({ subsets: ["latin"], weight: ["400"] });
