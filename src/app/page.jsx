@@ -7,10 +7,8 @@ import { fieldsConfig } from "@/config/fieldsConfig"
 import { geoOptions } from "@/config/geoOptions"
 import { Popup } from "@/components/Popup/Popup"
 import BottomTabs from "@/components/BottomTabs/BottomTabs"
-import { useTelegramViewport } from "@/config/tgMiniApp"
 
 export default function Home() {
-  useTelegramViewport()
  
   const [errors, setErrors] = useState({})
   const [formData, setFormData] = useState({

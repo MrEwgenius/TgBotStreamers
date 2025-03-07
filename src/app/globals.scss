@@ -5,60 +5,18 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #000000;
+    --background:  #000000;;
     --foreground: #ededed;
   }
 }
 
 html,
 body {
-  overscroll-behavior: none !important;
+  height: 100%;
   overflow-x: hidden;
-  position: relative;
-  height: var(--tg-viewport-stable-height);
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  overscroll-behavior: none;
   touch-action: pan-y;
-  -webkit-overflow-scrolling: touch;
-  background-color: #000000;
 }
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  min-height: var(--tg-viewport-height);
-  overflow: auto;
-}
-
-html {
-  height: -webkit-fill-available;
-}
-
-/* Контейнер контента */
-.content {
-  padding-bottom: 70px; /* Учитываем высоту нижней навигации */
-  box-sizing: border-box;
-  min-height: var(--tg-viewport-stable-height);
-}
-
-/* Предотвращаем оттягивание на iOS */
-* {
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
-}
-
-/* Разрешаем выделение текста в полях ввода */
-input,
-textarea {
-  -webkit-user-select: auto;
-  -webkit-touch-callout: auto;
-}
-
-
 
 body {
   color: var(--foreground);

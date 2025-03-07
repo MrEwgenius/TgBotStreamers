@@ -1,4 +1,3 @@
-import localFont from "next/font/local";
 import "./globals.scss";
 import { Montserrat } from "next/font/google";
 import Script from "next/script";
@@ -16,11 +15,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ru">
+      <script src="src/config/tgMiniApp.js">
+        
+      </script>
       <body className={inter.className}>
-        <Script
-          src="https://telegram.org/js/telegram-web-app.js"
-          strategy="beforeInteractive"
-        />
         <div className="content">{children}</div>
         <BottomTabs />
       </body>
