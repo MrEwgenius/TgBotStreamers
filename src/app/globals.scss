@@ -5,18 +5,57 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background:  #000000;;
+    --background: #000000;
     --foreground: #ededed;
   }
 }
 
 html,
 body {
-  height: 100%;
-  overflow-x: hidden;
   overscroll-behavior: none;
+  overflow-x: hidden;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  background-color: #000000;
 }
+
+/* Специальные стили для Telegram Mini App */
+body {
+  /* Предотвращаем появление серой полосы */
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+html {
+  height: -webkit-fill-available;
+}
+
+/* Контейнер контента */
+.content {
+  min-height: 100%;
+  padding-bottom: 70px; /* Учитываем высоту нижней навигации */
+  box-sizing: border-box;
+}
+
+/* Предотвращаем оттягивание на iOS */
+* {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Разрешаем выделение текста в полях ввода */
+input,
+textarea {
+  -webkit-user-select: auto;
+  -webkit-touch-callout: auto;
+}
+
+
 
 body {
   color: var(--foreground);
