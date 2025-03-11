@@ -10,7 +10,10 @@ import BottomTabs from "@/components/BottomTabs/BottomTabs";
 
 export default function Home() {
   const [userId, setUserId] = useState(() => {
-    return window.Telegram?.WebApp?.initDataUnsafe?.user?.id || null;
+    if (typeof window !== "undefined") {
+      return window.Telegram?.WebApp?.initDataUnsafe?.user?.id || null;
+    }
+    return null;
   });
   useEffect(() => {
     const tgWebApp = window.Telegram?.WebApp;
