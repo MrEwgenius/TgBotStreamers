@@ -15,7 +15,7 @@ const BottomTabs = () => {
     { icon: Home, path: "/", label: "Главная" },
     { icon: CreditCard, path: "/subscription", label: "Подписка" },
     { icon: HelpCircle, path: "/faq", label: "Помощь" },
-    { icon: User, path: "/profile", label: "Профиль" },
+    { icon: User, path: "/profile?user_id=#{client_id}", label: "Профиль" },
   ];
 
   return (

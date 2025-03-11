@@ -3,23 +3,37 @@
 import { useEffect, useState } from "react";
 import styles from "./page.module.scss";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { useSearchParams } from "next/navigation";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
 
 const ProfilePage = () => {
-  const [activeTab, setActiveTab] = useState("history"); // По умолчанию открыта вкладка История
+  const [activeTab, setActiveTab] = useState("history");
   const [history, setHistory] = useState([]);
   const [expandedItem, setExpandedItem] = useState(null);
   const [loading, setLoading] = useState(true);
-  const searchParams = useSearchParams();
-  const userIdFromUrl = searchParams.get("user_id");
-  // const userIdFromUrl = 13;
-  console.log(userIdFromUrl);
+  const [userId, setUserId] = useState(null);
 
   const subscriptionInfo = {
     plan: "Продвинутый",
     endDate: "31.12.2025",
   };
+
+  // Получаем user_id из URL при монтировании компонента
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Получаем параметры из URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const userIdFromUrl = urlParams.get("user_id");
+
+      // Если есть Telegram WebApp, можно также получить ID пользователя оттуда
+      const tgWebApp = window.Telegram?.WebApp;
+      const tgUserId = tgWebApp?.initDataUnsafe?.user?.id;
+
+      // Используем ID из URL или из Telegram WebApp
+      const id = userIdFromUrl || tgUserId || null;
+      setUserId(id);
+      console.log("User ID:", id);
+    }
+  }, []);
 
   // Функция для группировки расчетов по дате
   const groupCampaignsByDate = (campaigns) => {
@@ -79,8 +93,8 @@ const ProfilePage = () => {
   // Загрузка данных с API
   useEffect(() => {
     const fetchCampaigns = async () => {
-      if (!userIdFromUrl) {
-        console.error("Отсутствует user_id в URL параметрах");
+      if (!userId) {
+        console.error("Отсутствует user_id");
         setLoading(false);
         return;
       }
@@ -88,15 +102,18 @@ const ProfilePage = () => {
       try {
         setLoading(true);
 
-        const response = await fetch("https://holstenmain.com/api/getCampaigns", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            chat_id: Number.parseInt(userIdFromUrl),
-          }),
-        });
+        const response = await fetch(
+          "https://holstenmain.com/api/getCampaigns",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              chat_id: Number.parseInt(userId),
+            }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -119,8 +136,10 @@ const ProfilePage = () => {
       }
     };
 
-    fetchCampaigns();
-  }, [userIdFromUrl]);
+    if (userId) {
+      fetchCampaigns();
+    }
+  }, [userId]); // Используем userId вместо userIdFromUrl
 
   const toggleExpand = (dateIndex, itemIndex) => {
     const itemKey = `${history[dateIndex].date}-${itemIndex}`;
@@ -198,9 +217,14 @@ const ProfilePage = () => {
                           className={styles.historyHeader}
                           onClick={() => toggleExpand(dateIndex, itemIndex)}
                         >
-                          <span className={styles.streamerName}>
-                            {item.streamerName}
-                          </span>
+                          <div className={styles.headerContent}>
+                            <span className={styles.streamerNickname}>
+                              {item.streamerName}
+                            </span>
+                            <span className={styles.calculationDate}>
+                              {formatDate(dateGroup.date)}
+                            </span>
+                          </div>
                           {isExpanded ? (
                             <ChevronUp size={24} />
                           ) : (

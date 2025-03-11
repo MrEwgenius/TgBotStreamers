@@ -7,16 +7,17 @@ import { fieldsConfig } from "@/config/fieldsConfig";
 import { geoOptions } from "@/config/geoOptions";
 import { Popup } from "@/components/Popup/Popup";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
-import { useSearchParams } from "next/navigation";
 
 export default function Home() {
-  const [height, setHeight] = useState("100vh");
-
   useEffect(() => {
     // Разворачиваем Mini App на весь экран
     if (window.Telegram?.WebApp) {
       window.Telegram.WebApp.expand();
     }
+    const urlParams = new URLSearchParams(window.location.search);
+    const userIdFromUrl = urlParams.get("user_id");
+
+    console.log(userIdFromUrl);
   }, []);
 
   const [errors, setErrors] = useState({});
@@ -135,10 +136,6 @@ export default function Home() {
       return newErrors;
     });
   };
-  const searchParams = useSearchParams();
-  const userIdFromUrl = searchParams.get("user_id");
-  // const userIdFromUrl = 13;
-  console.log(userIdFromUrl);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
