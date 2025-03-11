@@ -9,24 +9,24 @@ import { Popup } from "@/components/Popup/Popup";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
 
 export default function Home() {
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(() => {
+    return window.Telegram?.WebApp?.initDataUnsafe?.user?.id || null;
+  });
   useEffect(() => {
-    // Разворачиваем Mini App на весь экран
-    // if (window.Telegram?.WebApp) {
-    //   window.Telegram.WebApp.expand();
-    // }
-    // const urlParams = new URLSearchParams(window.location.search);
-    // const userIdFromUrl = urlParams.get("user_id");
-
-    // Если есть Telegram WebApp, можно также получить ID пользователя оттуда
     const tgWebApp = window.Telegram?.WebApp;
-    const tgUserId = tgWebApp?.initDataUnsafe?.user?.id;
-
-    // Используем ID из URL или из Telegram WebApp
-    const id =  tgUserId ;
-    setUserId(id);
-    console.log("User ID:", id);
+    if (tgWebApp?.initDataUnsafe?.user?.id) {
+      setUserId(tgWebApp.initDataUnsafe.user.id);
+    } else {
+      // Ждем загрузки данных, если ID нет сразу
+      setTimeout(() => {
+        if (tgWebApp?.initDataUnsafe?.user?.id) {
+          setUserId(tgWebApp.initDataUnsafe.user.id);
+        }
+      }, 500);
+    }
+    
   }, []);
+  console.log("User ID:", userId);
 
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
@@ -239,8 +239,8 @@ export default function Home() {
       {showPopup && <Popup onClose={() => setShowPopup(false)} />}
       <form className={styles.form} ref={formRef} onSubmit={handleSubmit}>
         <h2 className={styles.title}>
-          Рассчитайте <br /> реальную стоимость <br /> интеграции стримера
-          <span className={styles.rocketIcon}>🚀</span>
+          Рассчитайте <br /> реальную стоимость <br /> интеграции стримера 
+          <span className={styles.rocketIcon}> 🚀</span>
         </h2>
 
         {/* <Suspense fallback={<div>Загрузка...</div>}>
