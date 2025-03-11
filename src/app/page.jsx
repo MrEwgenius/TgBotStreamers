@@ -11,7 +11,7 @@ import BottomTabs from "@/components/BottomTabs/BottomTabs";
 export default function Home() {
   const [userId, setUserId] = useState(() => {
     if (typeof window !== "undefined") {
-      return window.Telegram?.WebApp?.initDataUnsafe?.user?.id || null;
+      return window.Telegram?.WebApp?.initDataUnsafe?.user?.id ;
     }
     return null;
   });
@@ -29,7 +29,7 @@ export default function Home() {
     }
     
   }, []);
-  console.log("User ID:", userId);
+  console.log("User Page ID:", userId);
 
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({

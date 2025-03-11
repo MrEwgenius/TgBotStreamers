@@ -5,7 +5,7 @@ import { Home, User, CreditCard, HelpCircle } from "lucide-react";
 import { useEffect, useLayoutEffect, useState } from "react";
 
 const BottomTabs = () => {
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState();
   const router = useRouter();
   const pathname = usePathname();
 
