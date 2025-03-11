@@ -18,7 +18,14 @@ export default function Home() {
     const urlParams = new URLSearchParams(window.location.search);
     const userIdFromUrl = urlParams.get("user_id");
 
-    console.log(userIdFromUrl);
+    // Если есть Telegram WebApp, можно также получить ID пользователя оттуда
+    const tgWebApp = window.Telegram?.WebApp;
+    const tgUserId = tgWebApp?.initDataUnsafe?.user?.id;
+
+    // Используем ID из URL или из Telegram WebApp
+    const id = userIdFromUrl || tgUserId || null;
+    setUserId(id);
+    console.log("User ID:", id);
   }, []);
 
   const [errors, setErrors] = useState({});
@@ -160,7 +167,7 @@ export default function Home() {
         geoBet: Number.parseInt(formData.geoBet),
         performancePrice: Number.parseFloat(formData.performancePrice),
         agentCommission: Number.parseInt(formData.agentCommission),
-        chat_id: Number.parseInt(userIdFromUrl) ,
+        chat_id: Number.parseInt(userId),
       };
 
       const response = await fetch("https://holstenmain.com/api/calculate", {
