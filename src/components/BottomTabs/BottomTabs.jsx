@@ -2,7 +2,7 @@
 import { useRouter, usePathname } from "next/navigation";
 import styles from "./BottomTabs.module.scss";
 import { Home, User, CreditCard, HelpCircle } from "lucide-react";
-import { useEffect, useLayoutEffect, useState } from "react";
+import {  useLayoutEffect, useState } from "react";
 
 const BottomTabs = () => {
   const [userId, setUserId] = useState();
@@ -20,7 +20,6 @@ const BottomTabs = () => {
       const id =  tgUserId ;
       setUserId(id);
       console.log("User ID:", id);
-    // }
   }, []);
 
   const tabs = [

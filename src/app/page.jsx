@@ -23,7 +23,6 @@ export default function Home() {
 
         if (tgUserId) {
           setUserId(tgUserId);
-          console.log("User ID (через setInterval):", tgUserId);
           clearInterval(interval);
         }
       }, 200);
@@ -31,7 +30,6 @@ export default function Home() {
       return () => clearInterval(interval);
     }
   }, []);
-  console.log("User Page ID:", userId);
 
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
