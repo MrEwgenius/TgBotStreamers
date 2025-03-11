@@ -7,13 +7,13 @@ import { fieldsConfig } from "@/config/fieldsConfig";
 import { geoOptions } from "@/config/geoOptions";
 import { Popup } from "@/components/Popup/Popup";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
+import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const [height, setHeight] = useState("100vh");
 
   useEffect(() => {
     // Разворачиваем Mini App на весь экран
-    // let tg = window.Telegram?.WebApp.requestFullscreen();
     if (window.Telegram?.WebApp) {
       window.Telegram.WebApp.expand();
     }
@@ -135,6 +135,10 @@ export default function Home() {
       return newErrors;
     });
   };
+  const searchParams = useSearchParams();
+  const userIdFromUrl = searchParams.get("user_id");
+  // const userIdFromUrl = 13;
+  console.log(userIdFromUrl);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -158,6 +162,7 @@ export default function Home() {
         geoBet: Number.parseInt(formData.geoBet),
         performancePrice: Number.parseFloat(formData.performancePrice),
         agentCommission: Number.parseInt(formData.agentCommission),
+        chat_id: userIdFromUrl ? Number.parseInt(userIdFromUrl) : null,
       };
 
       const response = await fetch("https://holstenmain.com/api/calculate", {
@@ -165,6 +170,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
+
         body: JSON.stringify(transformedData),
       });
 
