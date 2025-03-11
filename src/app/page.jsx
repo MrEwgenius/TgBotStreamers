@@ -9,6 +9,7 @@ import { Popup } from "@/components/Popup/Popup";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
 
 export default function Home() {
+  const [userId, setUserId] = useState(null);
   useEffect(() => {
     // Разворачиваем Mini App на весь экран
     if (window.Telegram?.WebApp) {
@@ -159,7 +160,7 @@ export default function Home() {
         geoBet: Number.parseInt(formData.geoBet),
         performancePrice: Number.parseFloat(formData.performancePrice),
         agentCommission: Number.parseInt(formData.agentCommission),
-        chat_id: userIdFromUrl ? Number.parseInt(userIdFromUrl) : null,
+        chat_id: Number.parseInt(userIdFromUrl) ,
       };
 
       const response = await fetch("https://holstenmain.com/api/calculate", {
