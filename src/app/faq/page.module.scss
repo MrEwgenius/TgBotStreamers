@@ -14,7 +14,6 @@
   margin-bottom: 35px;
   color: #ffffff;
   max-width: 600px;
-
 }
 
 .handIcon {
@@ -47,14 +46,32 @@
 }
 
 .faqAnswer {
-  padding: 0 20px 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  padding: 0 20px;
+  
+  &.open {
+    max-height: 300px; /* Достаточно большое значение для любого контента */
+    padding: 0 20px 20px;
+  }
+  
+  .faqAnswerContent {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s , transform 0.3s ;
+  }
+  
+  &.open .faqAnswerContent {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
   p {
     font-weight: 400;
     font-size: 16px;
     line-height: 120%;
     letter-spacing: 0%;
-
     color: #ffffff;
     margin: 0;
   }
@@ -83,3 +100,4 @@
     background-color: #0077dd;
   }
 }
+

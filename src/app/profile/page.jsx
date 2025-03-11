@@ -126,9 +126,7 @@ const ProfilePage = () => {
         setHistory(groupedData);
 
         // Устанавливаем первый элемент как развернутый, если есть данные
-        if (groupedData.length > 0 && groupedData[0].items.length > 0) {
-          setExpandedItem(`${groupedData[0].date}-0`);
-        }
+       
       } catch (error) {
         console.error("Ошибка при загрузке истории:", error);
       } finally {
@@ -150,7 +148,26 @@ const ProfilePage = () => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
-    const month = date.toLocaleString("ru", { month: "long" });
+
+    // Месяцы в родительном падеже
+    const monthsGenitive = [
+      "января",
+      "февраля",
+      "марта",
+      "апреля",
+      "мая",
+      "июня",
+      "июля",
+      "августа",
+      "сентября",
+      "октября",
+      "ноября",
+      "декабря",
+    ];
+
+    // Получаем месяц (0-11) и используем соответствующее название из массива
+    const month = monthsGenitive[date.getMonth()];
+
     return `${day} ${month}`;
   };
 
@@ -221,9 +238,7 @@ const ProfilePage = () => {
                             <span className={styles.streamerNickname}>
                               {item.streamerName}
                             </span>
-                            <span className={styles.calculationDate}>
-                              {formatDate(dateGroup.date)}
-                            </span>
+                           
                           </div>
                           {isExpanded ? (
                             <ChevronUp size={24} />
