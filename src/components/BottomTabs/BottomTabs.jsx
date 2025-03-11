@@ -9,46 +9,54 @@ const BottomTabs = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleNavigation = (path) => {
-    router.push(path);
-  };
   useEffect(() => {
     if (typeof window !== "undefined") {
       // Получаем параметры из URL
       const urlParams = new URLSearchParams(window.location.search);
       const userIdFromUrl = urlParams.get("user_id");
 
-      // Если есть Telegram WebApp, можно также получить ID пользователя оттуда
       const tgWebApp = window.Telegram?.WebApp;
       const tgUserId = tgWebApp?.initDataUnsafe?.user?.id;
 
-      // Используем ID из URL или из Telegram WebApp
       const id = userIdFromUrl || tgUserId || null;
       setUserId(id);
       console.log("User ID:", id);
     }
   }, []);
 
+  // Определяем базовые пути для сравнения с pathname
+  const basePaths = {
+    home: "/",
+    subscription: "/subscription",
+    faq: "/faq",
+    profile: "/profile",
+  };
+
+  // Определяем полные пути с параметрами для навигации
+  const getFullPath = (basePath) => {
+    return userId ? `${basePath}?user_id=${userId}` : basePath;
+  };
+
   const tabs = [
-    { icon: Home, path: `/?user_id=${userId}`, label: "Главная" },
-    {
-      icon: CreditCard,
-      path: `/subscription?user_id=${userId}`,
-      label: "Подписка",
-    },
-    { icon: HelpCircle, path: `/faq?user_id=${userId}`, label: "Помощь" },
-    { icon: User, path: `/profile?user_id=${userId}`, label: "Профиль" },
+    { icon: Home, basePath: basePaths.home, label: "Главная" },
+    { icon: CreditCard, basePath: basePaths.subscription, label: "Подписка" },
+    { icon: HelpCircle, basePath: basePaths.faq, label: "Помощь" },
+    { icon: User, basePath: basePaths.profile, label: "Профиль" },
   ];
+
+  const handleNavigation = (basePath) => {
+    router.push(getFullPath(basePath));
+  };
 
   return (
     <nav className={styles.bottomNav}>
-      {tabs.map(({ icon: Icon, path, label }) => (
+      {tabs.map(({ icon: Icon, basePath, label }) => (
         <button
-          key={path}
+          key={basePath}
           className={`${styles.navButton} ${
-            pathname === path ? styles.active : ""
+            pathname === basePath ? styles.active : ""
           }`}
-          onClick={() => handleNavigation(path)}
+          onClick={() => handleNavigation(basePath)}
         >
           <Icon className={styles.icon} size={24} />
           <span>{label}</span>
