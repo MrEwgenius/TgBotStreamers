@@ -17,6 +17,9 @@ const BottomTabs = () => {
 
       const tgWebApp = window.Telegram?.WebApp;
       const tgUserId = tgWebApp?.initDataUnsafe?.user?.id;
+      console.log("tgUserId:", tgUserId);
+
+      
 
       const id = userIdFromUrl || tgUserId || null;
       setUserId(id);
