@@ -12,8 +12,8 @@ const BottomTabs = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       // Получаем параметры из URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const userIdFromUrl = urlParams.get("user_id");
+      // const urlParams = new URLSearchParams(window.location.search);
+      // const userIdFromUrl = urlParams.get("user_id");
 
       const tgWebApp = window.Telegram?.WebApp;
       const tgUserId = tgWebApp?.initDataUnsafe?.user?.id;
@@ -21,7 +21,7 @@ const BottomTabs = () => {
 
       
 
-      const id = userIdFromUrl || tgUserId || null;
+      const id =  tgUserId || null;
       setUserId(id);
       console.log("User ID:", id);
     }

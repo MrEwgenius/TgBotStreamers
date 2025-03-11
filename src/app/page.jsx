@@ -15,15 +15,15 @@ export default function Home() {
     if (window.Telegram?.WebApp) {
       window.Telegram.WebApp.expand();
     }
-    const urlParams = new URLSearchParams(window.location.search);
-    const userIdFromUrl = urlParams.get("user_id");
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const userIdFromUrl = urlParams.get("user_id");
 
     // Если есть Telegram WebApp, можно также получить ID пользователя оттуда
     const tgWebApp = window.Telegram?.WebApp;
     const tgUserId = tgWebApp?.initDataUnsafe?.user?.id;
 
     // Используем ID из URL или из Telegram WebApp
-    const id = userIdFromUrl || tgUserId || null;
+    const id =  tgUserId || null;
     setUserId(id);
     console.log("User ID:", id);
   }, []);
