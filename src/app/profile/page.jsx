@@ -20,13 +20,18 @@ const ProfilePage = () => {
   // Получаем user_id из URL при монтировании компонента
   useEffect(() => {
     if (typeof window !== "undefined") {
-      console.log("Telegram WebApp:", window.Telegram?.WebApp);
-  
+      // Получаем параметры из URL
+      // const urlParams = new URLSearchParams(window.location.search);
+      // const userIdFromUrl = urlParams.get("user_id");
+
+      // Если есть Telegram WebApp, можно также получить ID пользователя оттуда
       const tgWebApp = window.Telegram?.WebApp;
       const tgUserId = tgWebApp?.initDataUnsafe?.user?.id;
-  
-      setUserId(tgUserId || null);
-      console.log("User WebApp ID:", tgUserId);
+
+      // Используем ID из URL или из Telegram WebApp
+      const id =  tgUserId || null;
+      setUserId(id);
+      console.log("User ID:", id);
     }
   }, []);
 
