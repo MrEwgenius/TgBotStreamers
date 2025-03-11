@@ -12,9 +12,9 @@ export default function Home() {
   const [userId, setUserId] = useState(null);
   useEffect(() => {
     // Разворачиваем Mini App на весь экран
-    if (window.Telegram?.WebApp) {
-      window.Telegram.WebApp.expand();
-    }
+    // if (window.Telegram?.WebApp) {
+    //   window.Telegram.WebApp.expand();
+    // }
     // const urlParams = new URLSearchParams(window.location.search);
     // const userIdFromUrl = urlParams.get("user_id");
 
@@ -23,7 +23,7 @@ export default function Home() {
     const tgUserId = tgWebApp?.initDataUnsafe?.user?.id;
 
     // Используем ID из URL или из Telegram WebApp
-    const id =  tgUserId || null;
+    const id =  tgUserId ;
     setUserId(id);
     console.log("User ID:", id);
   }, []);
