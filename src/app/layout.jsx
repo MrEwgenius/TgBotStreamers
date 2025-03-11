@@ -12,6 +12,7 @@ export const metadata = {
     "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover",
 };
 
+
 export default function RootLayout({ children }) {
   return (
     <html lang="ru">
@@ -19,7 +20,6 @@ export default function RootLayout({ children }) {
         {/* Подключаем скрипт Telegram Web App */}
         <Script
           src="https://telegram.org/js/telegram-web-app.js"
-          strategy="beforeInteractive"
         />
         <div className="content">{children}</div>
         <BottomTabs />
