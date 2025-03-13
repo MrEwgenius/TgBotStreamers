@@ -45,7 +45,7 @@ const SubscriptionPage = () => {
           console.log("User ID:", tgUserId);
         }
       }
-    }, [userId]);
+    }, []);
 
   return (
     <div className={styles.subscriptionContainer}>

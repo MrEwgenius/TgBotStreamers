@@ -6,8 +6,11 @@ export default function PayButton({ amount, userId }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!amount || !userId) {
-      setError("Некорректные данные userId,amount");
+    // Сбрасываем ошибку, если данные правильные
+    if (amount && userId) {
+      setError(null);
+    } else {
+      setError("Некорректные данные userId, amount");
     }
   }, [amount, userId]);
   const handlePayment = async () => {
@@ -59,6 +62,7 @@ export default function PayButton({ amount, userId }) {
         {loading ? "Создание оплаты..." : `Оплатить $${amount}`}
       </button>
       <div>{userId}</div>
+      <div>{amount}</div>
       {error && <p style={{ color: "red" }}>{error} </p>}
     </div>
   );
