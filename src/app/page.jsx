@@ -7,6 +7,7 @@ import { fieldsConfig } from "@/config/fieldsConfig";
 import { geoOptions } from "@/config/geoOptions";
 import { Popup } from "@/components/Popup/Popup";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
+import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const [userId, setUserId] = useState(() => {
@@ -30,6 +31,19 @@ export default function Home() {
       return () => clearInterval(interval);
     }
   }, []);
+
+  /////////////
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const orderId = searchParams.get("order_id");
+    const status = searchParams.get("status");
+
+    if (orderId && status) {
+      console.log(`CryptoCloud Postback: Order ID: ${orderId}, Status: ${status}`);
+    }
+  }, [searchParams]);
+  /////////////////
 
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({

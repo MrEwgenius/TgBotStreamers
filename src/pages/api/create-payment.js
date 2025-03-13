@@ -23,7 +23,7 @@ export default async function handler(req, res) {
           currency,
           order_id,
           success_url: "https://tg-bot-streamers.vercel.app/", // Укажите ваш success URL
-          cancel_url: "https://tg-bot-streamers.vercel.app/cancel",   // Укажите ваш cancel URL
+          cancel_url: "https://tg-bot-streamers.vercel.app/",   // Укажите ваш cancel URL
         }),
       });
   
