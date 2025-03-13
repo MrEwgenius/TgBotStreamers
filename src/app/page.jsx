@@ -7,7 +7,6 @@ import { fieldsConfig } from "@/config/fieldsConfig";
 import { geoOptions } from "@/config/geoOptions";
 import { Popup } from "@/components/Popup/Popup";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
-import { SearchParamsLogger } from "@/components/SearchParamsLogger/SearchParamsLogger";
 
 export default function Home() {
   const [userId, setUserId] = useState(() => {
@@ -302,9 +301,7 @@ export default function Home() {
           Отправить
         </button>
       </form>
-      <Suspense fallback={null}>
-        <SearchParamsLogger />
-      </Suspense>
+   
       {/* Итоги расчётов */}
       {results && (
         <div className={styles.results} ref={resultsRef}>

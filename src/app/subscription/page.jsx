@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./page.module.scss";
 import { Check } from "lucide-react";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
@@ -8,6 +7,8 @@ import PayButton from "@/components/PayButton/PayButton";
 
 const SubscriptionPage = () => {
   const [selectedPlan, setSelectedPlan] = useState(1); // По умолчанию выбран Продвинутый план
+  const [userId, setUserId] = useState(null);
+
 
   const plans = [
     {
@@ -31,6 +32,20 @@ const SubscriptionPage = () => {
       ],
     },
   ];
+
+   useEffect(() => {
+      if (typeof window !== "undefined") {
+       
+        const tgWebApp = window.Telegram?.WebApp;
+        const tgUserId = tgWebApp?.initDataUnsafe?.user?.id;
+  
+        // Используем ID из URL или из Telegram WebApp
+        if (tgUserId !== userId) {
+          setUserId(tgUserId || null);
+          console.log("User ID:", tgUserId);
+        }
+      }
+    }, [userId]);
 
   return (
     <div className={styles.subscriptionContainer}>
@@ -68,7 +83,7 @@ const SubscriptionPage = () => {
           )}
         </div>
       ))}
-      <PayButton amount={plans[selectedPlan].amount} />
+      <PayButton amount={plans[selectedPlan].amount} userId={userId} />
       <BottomTabs />
     </div>
   );
