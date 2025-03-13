@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import styles from "./page.module.scss";
 import InputGroup from "@/components/InputGroup/InputGroup";
 import GeoSelect from "@/components/Select/GeoSelect";
@@ -7,7 +7,7 @@ import { fieldsConfig } from "@/config/fieldsConfig";
 import { geoOptions } from "@/config/geoOptions";
 import { Popup } from "@/components/Popup/Popup";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
-import { useSearchParams } from "next/navigation";
+import { SearchParamsLogger } from "@/components/SearchParamsLogger/SearchParamsLogger";
 
 export default function Home() {
   const [userId, setUserId] = useState(() => {
@@ -33,16 +33,16 @@ export default function Home() {
   }, []);
 
   /////////////
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
-  useEffect(() => {
-    const orderId = searchParams.get("order_id");
-    const status = searchParams.get("status");
+  // useEffect(() => {
+  //   const orderId = searchParams.get("order_id");
+  //   const status = searchParams.get("status");
 
-    if (orderId && status) {
-      console.log(`CryptoCloud Postback: Order ID: ${orderId}, Status: ${status}`);
-    }
-  }, [searchParams]);
+  //   if (orderId && status) {
+  //     console.log(`CryptoCloud Postback: Order ID: ${orderId}, Status: ${status}`);
+  //   }
+  // }, [searchParams]);
   /////////////////
 
   const [errors, setErrors] = useState({});
@@ -302,7 +302,9 @@ export default function Home() {
           Отправить
         </button>
       </form>
-
+      <Suspense fallback={null}>
+        <SearchParamsLogger />
+      </Suspense>
       {/* Итоги расчётов */}
       {results && (
         <div className={styles.results} ref={resultsRef}>
