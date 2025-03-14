@@ -19,8 +19,7 @@ export default function PayButton({ amount, userId }) {
 
     const headers = new Headers({
       "Content-Type": "application/json",
-      Authorization:
-        "Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjoiTXpnek5Eaz0iLCJ0eXBlIjoicHJvamVjdCIsInYiOiI4Y2JhYTU2ZWRiMzMyOTI2YjcxNjNlNTc0OTA0MmZiMThmNDQ0ODBkNTZlOWE0YWY5MGNjYzcwODM5MmQ0YTMxIiwiZXhwIjo4ODEzNzYxOTE4N30.2rGSiAP7RcPnfNPuB5ySMvDmcg_o6kyLnsMt9Nu_TeI",
+      Authorization: `Token ${process.env.TOKEN}`,
     });
 
     try {
@@ -32,7 +31,7 @@ export default function PayButton({ amount, userId }) {
           headers: headers,
           body: JSON.stringify({
             amount: amount,
-            shop_id: "oCu9otDwwj0vB4Js",
+            shop_id: process.env.SHOP_ID,
             currency: "USD",
             order_id: userId,
             success_url: "https://tg-bot-streamers.vercel.app/", // Укажите ваш success URL

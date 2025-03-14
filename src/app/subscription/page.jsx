@@ -6,31 +6,41 @@ import BottomTabs from "@/components/BottomTabs/BottomTabs";
 import PayButton from "@/components/PayButton/PayButton";
 
 const SubscriptionPage = () => {
-  const [selectedPlan, setSelectedPlan] = useState(1); // По умолчанию выбран Продвинутый план
+  const [selectedPlan, setSelectedPlan] = useState(null); // По умолчанию выбран Продвинутый план
   const [userId, setUserId] = useState(null);
+  const [error, setError] = useState(null);
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
-  const plans = [
-    {
-      name: "Базовый",
-      price: "$9.99/мес",
-      amount: 1,
-      features: [
-        "Доступ к основным функциям",
-        "Ограниченное кол-во запросов",
-        "Базовая поддержка",
-      ],
-    },
-    {
-      name: "Продвинутый",
-      price: "$19.99/мес",
-      amount: 2,
-      features: [
-        "Доступ к основным функциям",
-        "Ограниченное кол-во запросов",
-        "Базовая поддержка",
-      ],
-    },
-  ];
+  const plan = {
+    name: "Базовый",
+    price: "$9.99/мес",
+    amount: 9.99,
+    features: [
+      "Доступ к основным функциям",
+      "Ограниченное кол-во запросов",
+      "Базовая поддержка",
+    ],
+  };
+
+  useEffect(() => {
+    // Сбрасываем ошибку, если данные правильные
+    if (userId) {
+      setError(null);
+    } else {
+      setError("Некорректные данные userId");
+    }
+  }, [userId]);
+
+  // Проверяем, есть ли активная подписка
+  // const checkSubscription = async (userId) => {
+  //   try {
+  //     const response = await fetch(`/api/check-subscription?userId=${userId}`);
+  //     const data = await response.json();
+  //     setIsSubscribed(data.isActive);
+  //   } catch (error) {
+  //     console.error("Ошибка проверки подписки:", error);
+  //   }
+  // };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -44,6 +54,25 @@ const SubscriptionPage = () => {
       }
     }
   }, []);
+  // Оплата подписки
+  const handlePayment = async () => {
+    try {
+      const response = await fetch("/api/create-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: plan.amount, userId:13 }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        window.location.href = data.pay_url;
+      } else {
+        setError("Ошибка создания платежа: " + data.error);
+      }
+    } catch (err) {
+      setError("Произошла ошибка: " + err.message);
+    }
+  };
 
   return (
     <div className={styles.subscriptionContainer}>
@@ -52,36 +81,34 @@ const SubscriptionPage = () => {
         <Check className={styles.checkIcon} size={20} />
       </h1>
 
-      {plans.map((plan, index) => (
-        <div
-          key={index}
-          className={`${styles.planCard} ${
-            selectedPlan === index ? styles.selected : ""
-          }`}
-          onClick={() => setSelectedPlan(index)}
-        >
-          <div className={styles.planHeader}>
-            <h2 className={styles.planName}>{plan.name}</h2>
-            <p className={styles.planPrice}>{plan.price}</p>
-          </div>
-
-          <ul className={styles.featureList}>
-            {plan.features.map((feature, idx) => (
-              <li key={idx} className={styles.featureItem}>
-                <Check size={18} />
-                <p className={styles.aboutFeature}>{feature}</p>
-              </li>
-            ))}
-          </ul>
-
-          {selectedPlan === index ? (
-            <button className={styles.activatedButton}>План активирован</button>
-          ) : (
-            <button className={styles.selectButton}>Выбрать план</button>
-          )}
+      <div
+        className={`${styles.planCard} ${isSubscribed ? styles.selected : ""}`}
+      >
+        <div className={styles.planHeader}>
+          <h2 className={styles.planName}>{plan.name}</h2>
+          <p className={styles.planPrice}>{plan.price}</p>
         </div>
-      ))}
-      <PayButton amount={plans[selectedPlan].amount} userId={userId} />
+
+        <ul className={styles.featureList}>
+          {plan.features.map((feature, idx) => (
+            <li key={idx} className={styles.featureItem}>
+              <Check size={18} />
+              <p className={styles.aboutFeature}>{feature}</p>
+            </li>
+          ))}
+        </ul>
+
+        {isSubscribed ? (
+          <button className={styles.activatedButton}>План активирован</button>
+        ) : (
+          <button className={styles.selectButton} onClick={handlePayment}>
+            Купить подписку
+          </button>
+        )}
+      </div>
+      <div> {userId ? "User ID: " + userId : "User ID: неизвестен"}</div>
+      {error && <p style={{ color: "red" }}>{error} </p>}
+
       <BottomTabs />
     </div>
   );

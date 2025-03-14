@@ -3,33 +3,32 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Метод не поддерживается" });
   }
 
-  const { amount, currency, order_id } = req.body;
+  const { amount, userId } = req.body;
 
-  // Убедитесь, что все обязательные данные переданы
-  if (!amount || !currency || !order_id) {
+  if (!amount ||  !userId) {
     return res.status(400).json({ error: "Некорректные данные" });
   }
+  const token = process.env.NEXT_PUBLIC_TOKEN;
+  console.log(token);
+  
+  const headers = new Headers({
+    "Content-Type": "application/json",
+    Authorization: `Token ${token}`,
+  });
   try {
-    const locale = "ru";
     const response = await fetch(
-      "https://api.cryptocloud.plus/v2/invoice/create",
+      "https://api.cryptocloud.plus/v1/invoice/create",
       {
         method: "POST",
 
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjoiTXpnek5Eaz0iLCJ0eXBlIjoicHJvamVjdCIsInYiOiI4Y2JhYTU2ZWRiMzMyOTI2YjcxNjNlNTc0OTA0MmZiMThmNDQ0ODBkNTZlOWE0YWY5MGNjYzcwODM5MmQ0YTMxIiwiZXhwIjo4ODEzNzYxOTE4N30.2rGSiAP7RcPnfNPuB5ySMvDmcg_o6kyLnsMt9Nu_TeI`,
-        },
+        headers: headers,
         body: JSON.stringify({
-          shop_id: "oCu9otDwwj0vB4Js",
-          amount,
-          currency,
-          order_id,
-          add_fields: {
-            uder_id: "user_id",
-          },
-          success_url: "https://tg-bot-streamers.vercel.app/", // Укажите ваш success URL
-          cancel_url: "https://tg-bot-streamers.vercel.app/", // Укажите ваш cancel URL
+          amount: amount,
+          shop_id: process.env.NEXT_PUBLIC_SHOP_ID,
+          currency: "USD",
+          order_id: userId,
+          success_url: "https://tg-bot-streamers.vercel.app/", 
+          cancel_url: "https://tg-bot-streamers.vercel.app/", 
         }),
       }
     );
