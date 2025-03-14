@@ -9,7 +9,6 @@ const SubscriptionPage = () => {
   const [selectedPlan, setSelectedPlan] = useState(1); // По умолчанию выбран Продвинутый план
   const [userId, setUserId] = useState(null);
 
-
   const plans = [
     {
       name: "Базовый",
@@ -33,19 +32,18 @@ const SubscriptionPage = () => {
     },
   ];
 
-   useEffect(() => {
-      if (typeof window !== "undefined") {
-       
-        const tgWebApp = window.Telegram?.WebApp;
-        const tgUserId = tgWebApp?.initDataUnsafe?.user?.id;
-  
-        // Используем ID из URL или из Telegram WebApp
-        if (tgUserId !== userId) {
-          setUserId(tgUserId || null);
-          console.log("User ID:", tgUserId);
-        }
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const tgWebApp = window.Telegram?.WebApp;
+      const tgUserId = tgWebApp?.initDataUnsafe?.user?.id;
+
+      // Используем ID из URL или из Telegram WebApp
+      if (tgUserId !== userId) {
+        setUserId(tgUserId || null);
+        console.log("User ID:", tgUserId);
       }
-    }, []);
+    }
+  }, []);
 
   return (
     <div className={styles.subscriptionContainer}>

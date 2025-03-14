@@ -34,8 +34,7 @@ export default function PayButton({ amount, userId }) {
             amount: amount,
             shop_id: "oCu9otDwwj0vB4Js",
             currency: "USD",
-            order_id: `order_${Date.now()}`,
-            email: userId,
+            order_id: userId,
             success_url: "https://tg-bot-streamers.vercel.app/", // Укажите ваш success URL
             cancel_url: "https://tg-bot-streamers.vercel.app/", // Укажите ваш cancel URL
           }),
