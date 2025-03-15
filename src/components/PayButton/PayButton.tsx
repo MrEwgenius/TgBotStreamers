@@ -19,7 +19,7 @@ export default function PayButton({ amount, userId }) {
 
     const headers = new Headers({
       "Content-Type": "application/json",
-      Authorization: `Token ${process.env.TOKEN}`,
+      Authorization: `Token ${process.env.NEXT_PUBLIC_TOKEN}`,
     });
 
     try {
@@ -31,7 +31,7 @@ export default function PayButton({ amount, userId }) {
           headers: headers,
           body: JSON.stringify({
             amount: amount,
-            shop_id: process.env.SHOP_ID,
+            shop_id: process.env.NEXT_PUBLIC_SHOP_ID,
             currency: "USD",
             order_id: userId,
             success_url: "https://tg-bot-streamers.vercel.app/", // Укажите ваш success URL
