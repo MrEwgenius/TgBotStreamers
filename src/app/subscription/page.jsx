@@ -14,7 +14,7 @@ const SubscriptionPage = () => {
   const plan = {
     name: "Базовый",
     price: "$9.99/мес",
-    amount: 0.1,
+    amount: 2,
     features: [
       "Доступ к основным функциям",
       "Ограниченное кол-во запросов",
@@ -60,7 +60,7 @@ const SubscriptionPage = () => {
       const response = await fetch("/api/create-payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: plan.amount, userId }),
+        body: JSON.stringify({ amount: plan.amount, userId}),
       });
 
       const data = await response.json();
