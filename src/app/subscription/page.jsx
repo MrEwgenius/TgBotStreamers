@@ -14,7 +14,7 @@ const SubscriptionPage = () => {
   const plan = {
     name: "Базовый",
     price: "$9.99/мес",
-    amount: 2,
+    amount: 3,
     features: [
       "Доступ к основным функциям",
       "Ограниченное кол-во запросов",
