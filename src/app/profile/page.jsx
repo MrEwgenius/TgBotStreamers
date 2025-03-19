@@ -5,15 +5,16 @@ import styles from "./page.module.scss";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
 import { useCheckSubscriptionQuery } from "@/store/subscriptionApi";
+import { useRouter } from "next/navigation";
 
 const ProfilePage = () => {
+  const router = useRouter();
+
   const [activeTab, setActiveTab] = useState("history");
   const [history, setHistory] = useState([]);
   const [expandedItem, setExpandedItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState(null);
-
-
 
   // Получаем user_id из URL при монтировании компонента
   useEffect(() => {
@@ -22,7 +23,7 @@ const ProfilePage = () => {
       const tgUserId = tgWebApp?.initDataUnsafe?.user?.id;
 
       // Используем ID из URL или из Telegram WebApp
-      const id =  tgUserId || null;
+      const id = tgUserId || null;
       setUserId(id);
       console.log("User ID:", id);
     }
@@ -119,7 +120,6 @@ const ProfilePage = () => {
         setHistory(groupedData);
 
         // Устанавливаем первый элемент как развернутый, если есть данные
-       
       } catch (error) {
         console.error("Ошибка при загрузке истории:", error);
       } finally {
@@ -164,12 +164,18 @@ const ProfilePage = () => {
     return `${day} ${month}`;
   };
 
-    const { data, error, isLoading } = useCheckSubscriptionQuery(userId, {
+  const { data, error, isLoading } = useCheckSubscriptionQuery(
+    toString(userId),
+    {
       skip: !userId, // Не делать запрос, если userId ещё не загружен
-    });
-    const formatDate = (dateString) => {
-      return new Date(dateString).toLocaleDateString("ru-RU"); // Формат "дд.мм.гггг"
-    };
+    }
+  );
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("ru-RU"); // Формат "дд.мм.гггг"
+  };
+  const handleNavigation = () => {
+    router.push("/subscription");
+  };
 
   return (
     <div className={styles.profileContainer}>
@@ -202,12 +208,24 @@ const ProfilePage = () => {
           <h2>Информация о подписке</h2>
           <p>
             <span className={styles.label}>Подписка:</span>
-            <span className={styles.value}>{ data?.status == true ? 'Активна' : "Не активна"}</span>
+            <span className={styles.value}>
+              {data?.status == true ? "Активна" : "Не активна"}
+            </span>
           </p>
-          { data?.status == true && <p>
-            <span className={styles.label}>Действителен до:</span>
-            <span className={styles.value}>{formatDate(data.expires_at)}</span>
-          </p>}
+          {data?.status == true ? (
+            <p>
+              <span className={styles.label}>Действителен до:</span>
+              <span className={styles.value}>
+                {formatDate(data.expires_at)}
+              </span>
+            </p>
+          ) : (
+            <div>
+              <button onClick={handleNavigation} className={styles.askButton}>
+                <span>Приобрести подписку </span>
+              </button>
+            </div>
+          )}
         </div>
       )}
 
@@ -220,9 +238,7 @@ const ProfilePage = () => {
           ) : (
             history.map((dateGroup, dateIndex) => (
               <div key={dateGroup.date} className={styles.dateGroup}>
-                <h3 className={styles.dateLabel}>
-                  {Correct(dateGroup.date)}
-                </h3>
+                <h3 className={styles.dateLabel}>{Correct(dateGroup.date)}</h3>
                 <ul className={styles.historyList}>
                   {dateGroup.items.map((item, itemIndex) => {
                     const itemKey = `${dateGroup.date}-${itemIndex}`;
@@ -238,7 +254,6 @@ const ProfilePage = () => {
                             <span className={styles.streamerNickname}>
                               {item.streamerName}
                             </span>
-                           
                           </div>
                           {isExpanded ? (
                             <ChevronUp size={24} />

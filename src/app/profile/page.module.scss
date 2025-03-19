@@ -173,3 +173,27 @@ margin-left: 4px;
   display: block;
   margin-bottom: 4px;
 }
+
+.askButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #0088ff;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 16px;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 30px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: 0%;
+
+  &:hover {
+    background-color: #0077dd;
+  }
+}

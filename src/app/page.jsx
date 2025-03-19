@@ -11,7 +11,6 @@ import { useCheckSubscriptionQuery } from "@/store/subscriptionApi";
 
 export default function Home() {
   const [userId, setUserId] = useState(() => {
-
     if (typeof window !== "undefined") {
       return window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
     }
@@ -199,7 +198,7 @@ export default function Home() {
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
-      }   
+      }
 
       const result = await response.json();
       setResults(result);
@@ -252,12 +251,12 @@ export default function Home() {
     }
   }, []);
 
-
-  const { data, error, isLoading } = useCheckSubscriptionQuery(userId, {
-    skip: !userId, // Не делать запрос, если userId ещё не загружен
-  });
-
-  
+  const { data, error, isLoading } = useCheckSubscriptionQuery(
+    toString(userId),
+    {
+      skip: !userId, // Не делать запрос, если userId ещё не загружен
+    }
+  );
 
   return (
     <div className={styles.container}>
@@ -310,7 +309,7 @@ export default function Home() {
           Отправить
         </button>
       </form>
-   
+
       {/* Итоги расчётов */}
       {results && (
         <div className={styles.results} ref={resultsRef}>
