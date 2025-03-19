@@ -8,6 +8,7 @@ import { geoOptions } from "@/config/geoOptions";
 import { Popup } from "@/components/Popup/Popup";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
 import { useCheckSubscriptionQuery } from "@/store/subscriptionApi";
+import Rocket from "../../public/Rocket";
 
 export default function Home() {
   const [userId, setUserId] = useState(() => {
@@ -251,12 +252,9 @@ export default function Home() {
     }
   }, []);
 
-  const { data, error, isLoading } = useCheckSubscriptionQuery(
-    toString(userId),
-    {
-      skip: !userId, // Не делать запрос, если userId ещё не загружен
-    }
-  );
+  const { data, error, isLoading } = useCheckSubscriptionQuery(userId, {
+    skip: !userId, // Не делать запрос, если userId ещё не загружен
+  });
 
   return (
     <div className={styles.container}>
@@ -264,7 +262,9 @@ export default function Home() {
       <form className={styles.form} ref={formRef} onSubmit={handleSubmit}>
         <h2 className={styles.title}>
           Рассчитайте <br /> реальную стоимость <br /> интеграции стримера
-          <span className={styles.rocketIcon}> 🚀</span>
+          <span style={{ position:'relative', display: "inline-block",left:'4px', top: "2px" }}>
+            <Rocket />
+          </span>
         </h2>
 
         {/* <Suspense fallback={<div>Загрузка...</div>}>

@@ -4,6 +4,7 @@ import styles from "./page.module.scss";
 import { Check } from "lucide-react";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
 import PayButton from "@/components/PayButton/PayButton";
+import CheckMark from "../../../public/Check";
 
 const SubscriptionPage = () => {
   const [selectedPlan, setSelectedPlan] = useState(null); // По умолчанию выбран Продвинутый план
@@ -60,7 +61,7 @@ const SubscriptionPage = () => {
       const response = await fetch("/api/create-payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: plan.amount, userId}),
+        body: JSON.stringify({ amount: plan.amount, userId }),
       });
 
       const data = await response.json();
@@ -78,7 +79,9 @@ const SubscriptionPage = () => {
     <div className={styles.subscriptionContainer}>
       <h1 className={styles.title}>
         Подберите <br /> для себя лучший <br /> вариант подписки
-        <Check className={styles.checkIcon} size={20} />
+        <span style={{ position:'relative', display: "inline-block",left:'3px', top: "2px" }}>
+          <CheckMark />
+        </span>
       </h1>
 
       <div

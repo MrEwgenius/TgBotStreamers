@@ -33,6 +33,11 @@
 
   &::placeholder {
     color: #9c9c9c;
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19.2px;
+    letter-spacing: 0;
   }
 
   &[type="number"]::-webkit-outer-spin-button,

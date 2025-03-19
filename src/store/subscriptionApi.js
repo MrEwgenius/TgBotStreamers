@@ -8,7 +8,7 @@ export const subscriptionApi = createApi({
       query: (chat_id) => ({
         url: "/checkSub", // Достаточно относительного пути
         method: "POST",
-        body: { chat_id }, // Упрощённая запись
+        body: { chat_id: String(chat_id) }, // Упрощённая запись
       }),
       transformResponse: (response) => ({
         status: response.status,

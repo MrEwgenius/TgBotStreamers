@@ -6,11 +6,12 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
 import { useCheckSubscriptionQuery } from "@/store/subscriptionApi";
 import { useRouter } from "next/navigation";
+import ProfileSvg from "../../../public/ProfileSvg";
 
 const ProfilePage = () => {
   const router = useRouter();
 
-  const [activeTab, setActiveTab] = useState("history");
+  const [activeTab, setActiveTab] = useState("subscription");
   const [history, setHistory] = useState([]);
   const [expandedItem, setExpandedItem] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -164,12 +165,9 @@ const ProfilePage = () => {
     return `${day} ${month}`;
   };
 
-  const { data, error, isLoading } = useCheckSubscriptionQuery(
-    toString(userId),
-    {
-      skip: !userId, // Не делать запрос, если userId ещё не загружен
-    }
-  );
+  const { data, error, isLoading } = useCheckSubscriptionQuery(userId, {
+    skip: !userId, // Не делать запрос, если userId ещё не загружен
+  });
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("ru-RU"); // Формат "дд.мм.гггг"
   };
@@ -181,7 +179,16 @@ const ProfilePage = () => {
     <div className={styles.profileContainer}>
       <h1 className={styles.title}>
         Ваш профиль
-        <span className={styles.userIcon}>👤</span>
+        <span
+          style={{
+            position: "relative",
+            display: "inline-block",
+            left: "4px",
+            top: "2px",
+          }}
+        >
+          <ProfileSvg />
+        </span>
       </h1>
 
       <div className={styles.tabContainer}>
@@ -206,6 +213,7 @@ const ProfilePage = () => {
       {activeTab === "subscription" && (
         <div className={styles.subscriptionInfo}>
           <h2>Информация о подписке</h2>
+          <div>{"userId: " + userId}</div>
           <p>
             <span className={styles.label}>Подписка:</span>
             <span className={styles.value}>
