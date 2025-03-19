@@ -2,6 +2,7 @@ import "./globals.scss";
 import { Montserrat } from "next/font/google";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
 import Script from "next/script";
+import Providers from "./providers";
 
 const inter = Montserrat({ subsets: ["latin"], weight: ["400"] });
 
@@ -17,12 +18,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ru">
       <body className={inter.className}>
-        {/* Подключаем скрипт Telegram Web App */}
-        <Script
-          src="https://telegram.org/js/telegram-web-app.js"
-        />
-        <div className="content">{children}</div>
-        <BottomTabs />
+        <Providers>
+          {/* Подключаем скрипт Telegram Web App */}
+          <Script src="https://telegram.org/js/telegram-web-app.js" />
+          <div className="content">{children}</div>
+          <BottomTabs />
+        </Providers>
       </body>
     </html>
   );

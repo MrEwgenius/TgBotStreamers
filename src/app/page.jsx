@@ -7,9 +7,11 @@ import { fieldsConfig } from "@/config/fieldsConfig";
 import { geoOptions } from "@/config/geoOptions";
 import { Popup } from "@/components/Popup/Popup";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
+import { useCheckSubscriptionQuery } from "@/store/subscriptionApi";
 
 export default function Home() {
   const [userId, setUserId] = useState(() => {
+
     if (typeof window !== "undefined") {
       return window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
     }
@@ -197,7 +199,7 @@ export default function Home() {
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      }   
 
       const result = await response.json();
       setResults(result);
@@ -249,6 +251,13 @@ export default function Home() {
       localStorage.setItem("hasSeenPopup", "true");
     }
   }, []);
+
+
+  const { data, error, isLoading } = useCheckSubscriptionQuery(userId, {
+    skip: !userId, // Не делать запрос, если userId ещё не загружен
+  });
+
+  
 
   return (
     <div className={styles.container}>

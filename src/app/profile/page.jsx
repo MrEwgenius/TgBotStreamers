@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.scss";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import BottomTabs from "@/components/BottomTabs/BottomTabs";
+import { useCheckSubscriptionQuery } from "@/store/subscriptionApi";
 
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("history");
@@ -12,19 +13,11 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState(null);
 
-  const subscriptionInfo = {
-    plan: "Продвинутый",
-    endDate: "31.12.2025",
-  };
+
 
   // Получаем user_id из URL при монтировании компонента
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Получаем параметры из URL
-      // const urlParams = new URLSearchParams(window.location.search);
-      // const userIdFromUrl = urlParams.get("user_id");
-
-      // Если есть Telegram WebApp, можно также получить ID пользователя оттуда
       const tgWebApp = window.Telegram?.WebApp;
       const tgUserId = tgWebApp?.initDataUnsafe?.user?.id;
 
@@ -145,7 +138,7 @@ const ProfilePage = () => {
   };
 
   // Функция для форматирования даты (только день и месяц)
-  const formatDate = (dateString) => {
+  const Correct = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
 
@@ -170,6 +163,13 @@ const ProfilePage = () => {
 
     return `${day} ${month}`;
   };
+
+    const { data, error, isLoading } = useCheckSubscriptionQuery(userId, {
+      skip: !userId, // Не делать запрос, если userId ещё не загружен
+    });
+    const formatDate = (dateString) => {
+      return new Date(dateString).toLocaleDateString("ru-RU"); // Формат "дд.мм.гггг"
+    };
 
   return (
     <div className={styles.profileContainer}>
@@ -201,13 +201,13 @@ const ProfilePage = () => {
         <div className={styles.subscriptionInfo}>
           <h2>Информация о подписке</h2>
           <p>
-            <span className={styles.label}>План:</span>
-            <span className={styles.value}>{subscriptionInfo.plan}</span>
+            <span className={styles.label}>Подписка:</span>
+            <span className={styles.value}>{ data?.status == true ? 'Активна' : "Не активна"}</span>
           </p>
-          <p>
+          { data?.status == true && <p>
             <span className={styles.label}>Действителен до:</span>
-            <span className={styles.value}>{subscriptionInfo.endDate}</span>
-          </p>
+            <span className={styles.value}>{formatDate(data.expires_at)}</span>
+          </p>}
         </div>
       )}
 
@@ -221,7 +221,7 @@ const ProfilePage = () => {
             history.map((dateGroup, dateIndex) => (
               <div key={dateGroup.date} className={styles.dateGroup}>
                 <h3 className={styles.dateLabel}>
-                  {formatDate(dateGroup.date)}
+                  {Correct(dateGroup.date)}
                 </h3>
                 <ul className={styles.historyList}>
                   {dateGroup.items.map((item, itemIndex) => {

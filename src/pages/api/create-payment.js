@@ -27,8 +27,6 @@ export default async function handler(req, res) {
           shop_id: process.env.NEXT_PUBLIC_SHOP_ID,
           currency: "USD",
           order_id: userId,
-          success_url: "https://tg-bot-streamers.vercel.app/", 
-          cancel_url: "https://tg-bot-streamers.vercel.app/", 
         }),
       }
     );
