@@ -184,7 +184,7 @@ const ProfilePage = () => {
             position: "relative",
             display: "inline-block",
             left: "4px",
-            top: "2px",
+            top: "1px",
           }}
         >
           <ProfileSvg />
@@ -213,7 +213,6 @@ const ProfilePage = () => {
       {activeTab === "subscription" && (
         <div className={styles.subscriptionInfo}>
           <h2>Информация о подписке</h2>
-          <div>{"userId: " + userId}</div>
           <p>
             <span className={styles.label}>Подписка:</span>
             <span className={styles.value}>
@@ -222,7 +221,7 @@ const ProfilePage = () => {
           </p>
           {data?.status == true ? (
             <p>
-              <span className={styles.label}>Действителен до:</span>
+              <span className={styles.label}>Действительна до:</span>
               <span className={styles.value}>
                 {formatDate(data.expires_at)}
               </span>

@@ -262,7 +262,7 @@ export default function Home() {
       <form className={styles.form} ref={formRef} onSubmit={handleSubmit}>
         <h2 className={styles.title}>
           Рассчитайте <br /> реальную стоимость <br /> интеграции стримера
-          <span style={{ position:'relative', display: "inline-block",left:'4px', top: "2px" }}>
+          <span style={{ position:'relative', display: "inline-block",left:'4px', top: "1px" }}>
             <Rocket />
           </span>
         </h2>

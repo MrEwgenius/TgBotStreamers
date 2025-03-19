@@ -79,7 +79,7 @@ const SubscriptionPage = () => {
     <div className={styles.subscriptionContainer}>
       <h1 className={styles.title}>
         Подберите <br /> для себя лучший <br /> вариант подписки
-        <span style={{ position:'relative', display: "inline-block",left:'3px', top: "2px" }}>
+        <span style={{ position:'relative', display: "inline-block",left:'3px', top: "1px" }}>
           <CheckMark />
         </span>
       </h1>
