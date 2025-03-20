@@ -18,7 +18,7 @@ const SubscriptionPage = () => {
     amount: 4,
     features: [
       "Доступ к основным функциям",
-      "Ограниченное кол-во запросов",
+      "Неограниченное кол-во запросов",
       "Базовая поддержка",
     ],
   };
@@ -109,7 +109,6 @@ const SubscriptionPage = () => {
           </button>
         )}
       </div>
-      <div> {userId ? "User ID: " + userId : "User ID: неизвестен"}</div>
       {error && <p style={{ color: "red" }}>{error} </p>}
 
       <BottomTabs />
